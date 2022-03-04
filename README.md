@@ -1,3 +1,3 @@
 # History Work
 
-## These are history study notes and summaries
+These are history study notes and summaries
