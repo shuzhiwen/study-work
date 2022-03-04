@@ -1,0 +1,269 @@
+JS 小结
+
+e.style.display='...'       元素是一个对象，通过‘.’运算符可以设置其style样式，这种方法的属性名与css略有不同
+<script src="...">          js代码必须写在<script>标签内，，一般置于<head>标签内部或文件尾部，src为外部引用js文件所需的属性
+integrity                   js标签属性：属性值写入所引用外部文件的Hash签名，用于验证脚本的一致性，防止恶意篡改
+defer                       js标签属性：可以解决脚本文件下载阻塞网页渲染的问题，但加载的文件不应该使用document.write方法
+async                       js标签属性：功能和defer一样，适用于脚本之间无依赖的情况，同时使用async和defer，浏览器默认使用前者
+__ or /**/                  文本注释，和c语言相同
+(_)($)(abc...)              js的命名规则和java一样
+var                         语言关键字，声明一个变量，{}对var声明的变量而言不构成单独的作用域
+let                         语言关键字，声明一个变量，区别于var，所声明的变量只在let所在的代码块内有效     
+const                       语言关键字，声明一个常量，本质是指针指向的地址不变
+eval(...)                   接受一个字符串参数，将其内容转变成语句执行
+hoisting                    变量提升，js引擎的工作方式是：先解析代码，获取所有被声明的变量，再逐行运行，即所有声明的变量会被提升到代码的头部
+switch-case                 选择语法结构，与其他语言的差别在于：switch和case内容的比较采用的是“===”
+label                       在代码块（通常是循环）之前设置label标签，配合break或continue可以实现多层（循环）跳转
+typeof(...)                 变量类型的判断，一般用于var（动态类型）的变量
+toString()                  基本变量内置的方法，将当前对象转换成字符串，带一个基参数（默认为10），用于数字转换
+String(...)                 区别于.toString，String（null）返回“null”，而不是报错，对类使用String()，toString优先于valueOf执行
+parseInt()/parseFloat()     字符串转换成数字，如果同时有数字和字符串，则定位开头的数字，否则返回NaN，接受第二个参数表示待转换数字的进制
+Number(...)                 字符串转换成数字，区别于parse，当含有非数字的内容时，直接返回NaN
+Boolean(...)                对象转换成布尔型，非空非0非null即为true
+Object(...)                 任意类型转换为对象，参数为空、undefined、null时返回空对象
+function                    语言关键字，用于定义函数，js中动态类型无需声明，不存在函数重载，函数名相同时，后面的会覆盖前面的
+===/!==                     绝对等于/不等于，顾名思义，在==/！=的基础上还会判断对象的类型，例如‘1’和1
+alert(...)                  弹出警告框（阻挡所有其他操作），也可以用于调试
+confirm(...)                弹出确认框，常用于危险性操作，返回true或false
+prompt(...)                 弹出输入框，返回输入的字符串（取消输入为null、不输入为空），可有第二个参数，其含义为默认字符串
+setTimeout(f, s)            计时器：在（至少）s毫秒之后执行一次f函数，计时器调用的函数中不要调用document.write()
+                            <-setTimeout（f，0）：将f函数安排到下一轮事件循环的开头执行，人为控制函数运行顺序
+clearTimeout(sT)            终止一个正在等待执行的任务，sT为setTimeout函数返回的整数值（计时器编号）,此编号连续
+setInterval(f, s)           计时器：每隔（至少）s毫秒，执行一次f函数，计算的是“开始执行”之间的间隔，计时器调用的函数中不要调用document.write()
+clearInterval(sI)           终止一个不断重复的任务，sI为setInterval函数返回的整数值（计时器编号），此编号连续
+debounce                    “防抖动”函数：出于不希望回调函数被频繁调用的目的，此函数人为定义
+e.attributes                获取元素结点所有的的属性结点（数组）
+e.childNodes                获取元素结点所有的的内容结点（数组）
+e.attributes["x"]           获取指定的属性结点：类似于下标引用，x为某一属性，通常用于自定义属性
+e.getAttribute("x")         获取指定的属性结点值：等同于e.attributes["x"].nodeValue，通常用于自定义属性，对应有setAttribute
+nodeName                    结点名称：文档的结点名是#document，标签元素的结点名是标签名，属性的结点名是属性名（如id），内容的结点名是#text
+nodeValue                   结点值：文档的结点值是null，标签元素的结点值是null，属性的结点值是属性值，内容的结点值是内容
+nodeType                    结点类型：元素为1、属性为2、文本为3、注释为8、文档为9
+innerHTML                   结点值的引用，类似于childNodes[0].nodeValue，常用于修改元素内容
+onfocus/onblur              焦点事件：组件获取焦点的时候会触发onfocus事件，组件失去焦点的时候会触发onblur事件
+onmouse...                  鼠标事件：onmousedown鼠标按下、onmouseup鼠标弹起、onmousemove鼠标经过、onmouseover鼠标进入
+                            <-onmouseout鼠标退出，鼠标进入一个组件时，onmouseover只触发一次，onmousemove每次移动都会触发
+onkey...                    键盘事件：onkeyup键盘弹起、onkeypress键盘按下（只能获取字符键、不能判断用户是否点击了修饰键、可以判断大小写）
+                            <-onkeydown键盘按下（可以获取除打印键Prts外的所有键值、可以判断用户是否点击了修饰键、不能判断大小写）
+                            <-以上规则并非绝对...具体情况视浏览器而定
+onclick/ondblclick          点击事件：单击/双击，空格和回车可达到单机效果，自定义函数不能取名为click()
+onchange                    变化事件：组件值改变后触发，对于输入框而言，只有在失去焦点时才会触发onchange
+onsubmit                    提交事件：通常在form元素上监听提交事件
+onload                      加载事件：整个文档或图片加载成功后触发
+return                      配合onsubmit使用：当函数内部判断用户名为空时可以返回false，从而取消提交表单，阻止事件发生
+parentNode                  获取父结点，所有组件享有共同的祖先document
+...Sibling                  获取兄弟结点，previousSibling前一个兄弟结点，nextSibling后一个兄弟结点，兄弟结点是紧挨着的
+...Child                    获取子结点，firstChild第一个子结点，lastChild最后一个子结点，标签之间的文本、空格、换行也是子结点
+children                    获取所有子结点的另一种方式，区别是：childNodes会包含文本结点，children会排除文本结点
+create...                   创建一个新的结点：createElement元素结点、createTextNode文本结点、createAttribute属性结点
+remove...                   删除一个元素结点：removeChild（待删除的子结点）、removeAttribute（待删除的属性结点）
+                            <-删除文本结点除了利用removeChild还可以设置innerHTML=“”
+replaceChild(x,y)           替换一个子节点：第一个参数x是取代结点，第二个参数y是被取代的结点，以父元素为操作对象
+appendChild                 新建的元素结点可以通过appendChild插入到另一个元素结点的尾部，若元素结点已存在，则移动到尾部，以父元素为操作对象
+insertBefore(x,y)           新建的元素结点可以插入到另一个元素结点的任意位置，x为待插入节点，y为插入位置（某一子节点），以父元素为操作对象
+
+
+Number            __数字对象__
+                  判断是否是一个数字：isNaN()，在判断之前会进行Number的隐式转换
+                  小数表达：toFixed（输入精确的位数），科学计数法表达：toExponential()
+                  获取对象中的数值：valueOf()，内部以“===”为判断依据
+
+String            __字符串对象__
+                  获取长度：length（属性而非方法）
+                  获取指定位置的字符：charAt（输入下标）
+                  获取指定位置的Unicode码：charCodeAt（输入下标）
+                  字符串拼接：concat（输入字符串）
+                  获取子串第一次出现的位置：indexOf（输入子串）
+                  获取子串最后一次出现的位置：lastIndexOf（输入子串）
+                  比较字符串是否相同：localeCompare（待比较字符串）
+                  截取一段子串：substring（开始下标，结束下标（取不到））
+                  分割字符串：split（输入分隔符（子串），输入最大分割数（缺省））
+                  替换字符串：replace（被替换的字符串，替换的字符串）默认只替换第一处，更多用法参考正则表达式
+                  <-所有返回字符串类型的方法，返回的都是基本类型的string
+
+Array             __数组对象__
+                  创建数组时：输入一个参数代表数组长度，输入多个参数代表多个元素值，数组大小自动确定
+                  获取长度：length（属性而非方法），length置零表示清空数组
+                  遍历数组：for（index in array），不局限于数组遍历
+                  连接数组：concat（输入数组）
+                  获取数组的字符串表达：join（输入分隔符（缺省，默认为‘，’））
+                  在数组末尾进行栈操作：push()、pop()，在数组开头进行栈操作：unshift()、shift()
+                  排序：sort（comparator（缺省）），比较器函数（降序）：function comparator（v1，v2）{}
+                  数组反转：reverse()
+                  获取子数组：slice（开始下标，结束下标（缺省、取不到））
+                  删除、插入操作：splice（开始下标，删除元素的个数，插入的元素...（可以无限））
+                  将“类似数组的对象”转换成数组：var arr = Array.prototype.slice.call（arrayLike）
+
+Symbol            __特殊标识符__
+                  第七种原始数据类型，用于创建一个独一无二的标识符（只用字符串容易产生重复），用作属性名时需要在[]内定义
+                  获取指定对象的所有Symbol属性名：Object.getOwnPropertySymbols()
+                  返回所有类型的键名：Reflect.ownKeys()，Symbol类型的键名不会被常规方法遍历到
+                  重新使用同一个Symbol值：Symbol.for()，检查所用的key是否存在，存在则返回，不存在则新建Symbol值
+                  返回一个已创建的Symbol类型值的key：Symbol.keyFor()，但只能找到以Symbol.for()形式创建的Symbol值
+                  判断对象是否为类的实例：Symbol.hasInstance，是instanceof方法的内部实现
+                  判断对象是否可展开：Symbol.isConcatSpreadable，返回一个布尔值，数组默认可展开，类数组默认不可展开
+                  调用指定的构造函数：Symbol.species，实例对象在运行过程中再次调用构造函数时，会调用该属性指定的构造函数
+                  部署对象的同步遍历器接口：设置对象的Symbol.iterator属性，此函数返回一个遍历器对象，之后可以被for...of遍历
+                  <-默认调用Symbol.iterator的场合：解构赋值，扩展运算符（...），yield*等任何接受数组作为参数的场合
+                  <-部署遍历器的return方法：必须返回一个对象，外部遍历遇到break或抛出异常时会调用return方法
+                  部署对象的异步遍历器接口：设置对象的Symbol.asyncIterator属性，与Symbol.iterator大同小异
+
+Object/OOP        __面向对象编程__
+                  定义对象的name属性并赋值：object.属性名 = 属性值
+                  定义对象的print方法：object.print = function() {}
+                  设计一个对象：将定义过程写在一个构造函数里，实例化时new函数名即可
+                  判断当前函数是否用new命令调用：函数内部使用new.target，是则指向当前对象，否则为undefined
+                  this：总是返回一个对象，总是指向当前的运行环境（很重要），其指向是动态的，可作为参数传递
+                  <-常用操作：用一个变量固定外层this的值，在内层中使用这个变量（解决指向改变的问题）
+                  <-注意事项：避免多层this，避免数组处理方法（forEach）中的this，避免回调函数中的this
+                  this绑定：function.call（object，函数参数）改变this环境为object并在该环境下调用函数，参数“无效”则传入全局对象
+                  <-function.apply（object，函数参数数组）和call方法类似，唯一区别是传函数参数时是以数组的形式
+                  <-function.bind（object）：每次bind返回一个新函数，还可以接受更多的参数，固定原函数的参数值
+                  原型对象：构造函数默认拥有prototype属性，它指向实例的原型对象，定义在原型对象上的方法可被所有实例使用
+                  <-任何一个对象都可以是另一个对象的原型，由此形成原型链，尽头是Object.prototype的原型null
+                  判断数据类型：Object.prototype.toString.call（value），比typeof更准确
+                  得到一个对象的原型：Object.getPrototypeOf（object），或在对象的方法中使用super关键字
+                  设置一个对象的原型：Object.setPrototypeOf（现有对象，原型对象），返回现有对象
+                  利用现有对象构造新的对象：Object.create（现有对象），以现有对象为原型返回一个实例对象，自动继承原型对象的构造函数
+                  <-还可以接受第二个属性描述对象参数，它所描述的对象属性，会添加到实例对象，作为该对象自身的属性
+                  验证一个对象是否为指定的构造函数的实例：object instanceof Object/Function 
+                  验证一个对象是否为参数对象的原型：Object.prototype.isPrototypeOf（object），只需在原型链上即可
+                  获取构造函数的名称：function.constructor.name
+                  构造函数的单继承：先调用父类的构造函数object.call（this），然后让子类原型指向父类原型，同时修改constructor属性
+                  构造函数的多继承：通过Object.assign（子类.prototype, 第二个父类.prototype）对原型链进行修改实现
+                  对象的合并：Object.assign（target，...source），同名属性会被较后的source覆盖
+                  <-此方法只拷贝源对象自身的可枚举的属性，是浅拷贝，也可以用于处理数组
+
+
+Object(att)       __属性描述对象__
+                  元属性：value属性值，writable是否可写，enumerable是否可遍历，configurable是否可配置，get取值函数，set存值函数
+                  查看属性：Object.keys()查看自身所有可遍历（枚举）的属性，att in object查看某一属性，存在则返回true
+                  <-Object.hasOwnProperty（att）：区别于in方法，忽略了继承属性（如toString）
+                  <-Object.values()：返回参数对象自身的（不含继承的）所有可遍历（enumerable）属性的键值，过滤Symbol值属性
+                  <-Object.entries()：返回参数对象自身的（不含继承的）所有可遍历（enumerable）属性的键值对数组，遍历对象属性
+                  <-Object.fromEntries()：Object.entries()的逆操作，用于将键值对转为对象
+                  删除属性：delete object.att，删除成功或属性不存在返回true，属性不可以删除返回false
+                  获取对象属性的描述对象：getOwnPropertyDescriptor（object，属性名），不能用于继承属性
+                  返回指定对象所有自身属性（非继承属性）的描述对象：getOwnPropertyDescriptors()
+                  获取全部属性的属性名：getOwnPropertyNames()，区别于object.keys，还会返回不可遍历（枚举）的属性
+                  通过属性描述对象定义或修改一个属性：object.defineProperty（ies）（object，属性名，属性描述对象）
+                  <-当一个对象的原属性writable为false时，可通过覆盖属性描述对象修改其内容
+                  判断属性是否可遍历：prototype.propertyIsEnumerable（属性名），不能用于继承属性
+                  存取器：var obj = { get att() {}，set att（value） {} }，表示定义att属性的存取函数
+                  控制（冻结）对象状态：preventExtensions()，seal()，freeze()由弱到强
+                  <-preventExtensions()使一个对象无法添加新属性，isExtensible()检查是否使用了此方法
+                  <-seal()使一个对象既无法添加新属性，也无法删除旧属性，isSealed()检查是否使用了此方法
+                  <-freeze()在seal的基础上，不能改变属性值，使对象变成常量，isFrozen()检查是否使用了此方法
+
+JSON              __数据交互对象__
+                  创建方法（例）：var people = {“name”：“zhang3”，“age”，16}，键名也可以是数值，但引用的时候只能用[]
+                  数组创建方法（例）：var humans = [{...}，{...}，{...}]
+                  字符串转换成JSON对象：eval（“(”+待转换的字符串+“)”），单纯的{}会造成语句和表达式（对象）的歧义
+                  JSON对象转换成字符串，可以借助此方法打印JSON对象中的内容
+
+Operator          __运算符__
+                  二进制运算：& | ～，～～N 或 0 | num 可以快速对N取整，一个数与自身的取反相加等于-1
+                  二进制异或运算：a^=b b^=a a^=b，交换a和b的值，N ^ 0 也可以对N取整
+                  左移右移运算符：<< >>，二进制数快速求幂（整除），N << 0 也可以取整，>>>是带符号位的移动运算符
+                  void运算符：浏览器的书签工具（bookmarklet），在超级链接中插入代码可以防止网页跳转。
+                  右结合的运算符：三元运算符?:，赋值运算符=，指数运算符**
+
+Function          __函数对象__
+                  函数对象也称函数变量，是js中的一等公民
+                  获取函数名称：name属性，通过变量赋值定义的具名函数返回的是function关键字之后的函数名（只可在函数内部使用）
+                  获取函数的参数个数：length，可以配合实现“函数重载”
+                  函数参数传递：原始类型（数值、字符串、布尔）传入拷贝，符合类型（数组、对象、函数）传入地址
+                  获取函数参数对象：arguments[index]，只读属性，严格模式中，函数内部修改参数不会影响arguments中的参数值
+                  函数闭包：定义在函数f1内部的函数f2，通过函数f2可以访问函数f1内部的变量，但滥用则性能消耗极大
+                  <-通过闭包可以“记忆”函数上一次运行的结果，还可以封装对象的私有属性和私有方法
+                  <-另一种封装方法：立即执行的函数写法，return返回函数内部方法集合的对象，但不包括私有变量
+                  立即调用的函数表示法：（function(){code}()），避免歧义，外层括号必不可缺
+                  箭头函数：简洁的函数表示法，没有this，arguments，super，new.target等变量，不可以直接用来编写对象的方法
+                  函数尾调用：优化递归的一种解决方案，避免栈溢出的情况发生
+                  
+Error             __异常对象__
+                  错误提示信息massage，错误名称（非标准）name，错误堆栈（非标准）stack
+                  原生错误类型：SyntaxError语法错误，ReferenceError对象不存在，RangeError值超出有效范围
+                  <-TypeError对象、变量、参数不是预期类型，URIError URI相关函数的参数不正确，Error错误
+                  自定义错误对象：myError.prototype = new Error()，myError.prototype.constructor = myError;
+                  抛出异常：throw new Error()，通常用于函数中的错误检查，throw可以抛出任意类型的值
+                  捕捉异常：try-catch，和java一样的错误捕捉机制，但要注意，在输出错误信息之后需要换行
+                  <-finally代码块：置于try-catch之后，无论如何都会被执行（即使前面有return）
+
+Date              __日期工具对象__
+                  获取年、月、日：getFullYear()、getMonth()+1（月份是从0开始的）、getDate()
+                  获取小时、分钟、秒、毫秒：getHours()、getMinutes()、getSeconds、getMilliseconds()
+                  获取这周的第几天：getDay()（从0开始，且0代表星期日）
+                  获取从1970/1/1 08:00:00至今的毫秒数：getTime()
+                  修改日期对象的值：setFullYear()...（把上面的get换成set）
+                  执行加运算符的重载时，区别于一般类，toString()优先于valueOf()执行
+                  获取外部窗体（浏览器）的宽度和高度：outerWidth、outHeight
+
+Promise           __异步操作接口__
+                  概论：Promise既是对象，也是构造函数（js中的对象多数都是构造函数），接受一个f（回调函数）参数
+                  指定下一个的回调函数：promise.then（成功时的回调函数，可省略的失败时的回调函数）
+                  <-then方法的链式使用：后一个then的回调函数接受前一个then的回调函数的返回值
+                  <-某处发生异常，会向下传递错误，寻找第一个出现的rejected回调函数或者（即promise第二个参数）或者catch
+                  <-一般用catch方法处理错误而省略then的第二个参数reject
+                  finally：位于最后一步，总是会执行，总是会返回原来的值，finally的内容应与Promise的状态无关
+                  状态：pending异步操作未完成，fulfilled异步操作成功，rejected异步操作失败，后两者合称resolved已定型
+                  <-Promise状态只能变化一次，即由pending->fulfilled或者pending->rejected
+                  微任务：Promise中绑定的事件追加到本轮事件循环的末尾，不同于一般的异步任务
+                  缺点：创建后不可取消，内部错误不会反应到外部，处于pending状态的Promise的具体进程对外隐藏
+                  包装：Promise.all（Promise数组），包装后的Promise的状态为fulfilled当且仅当所有Promise的状态都为fulfilled
+                  <-包装后的Promise的状态为rejected当且仅当至少有一个Promise的状态为rejected
+                  <-前者返回所有Promise返回值组成的数组，后者返回第一个rejected的Promise返回值
+                  <-Promise.race()，功能和Promise.all()相同，但返回的是第一个改变状态的Promise的返回值
+                  类型转换：Promise.resolved()，参数为空时新建一个Promise对象；Promise.rejected()，状态固定为rejected
+                  语法糖：Promise.try（f），f是同步任务则同步执行，是异步任务则异步处理，此方法可以统一捕捉同步错误和异步错误
+
+Generator         __遍历器生成函数__
+                  定义方法：在function关键字和函数名之间添加一个‘*’号，内部用yield定义状态
+                  返回对象：Generator函数返回一个遍历器对象，遍历的目标是每一个使用yield定义的状态，遇到return语句则停止遍历
+                  关键字yield：只能在Generator函数中使用，可以看做是具有暂停和位置记忆功能的return语句
+                  <-在其他语句中使用需要添加()，用作函数参数或放在赋值表达式的右边可不加括号
+                  关联Iterator接口：将Generator赋值给对象的Symbol.iterator属性，使该对象具有Iterator接口
+                  <-Generator函数执行后，返回一个遍历器对象，该对象本身也具有Symbol.iterator属性，执行后返回自身
+                  <-外部遍历Generator函数时，for...of循环会忽略return之后的内容
+                  向函数内部注入值：遍历时next方法添加的参数会成为上一个yield表达式的返回值，第一次传参无效
+                  异常处理：Generator.prototype.throw()可以在函数体外抛出错误并在函数体内捕获（反之亦然），并附带执行一次next方法
+                  终止遍历：调用return，返回值的value属性就是return方法的参数，return语句会等到finally代码块结束后执行
+                  嵌套遍历：yield关键字后添加一个‘*’号，功能类似于函数递归，即将Generator函数内部的Generator函数“展开”
+                  异步操作控制流程：Thunk函数，“传名（值）调用”的一种实现策略，用来替换某个表达式，用于函数传参
+                  co模块：异步操作的便捷处理方法，传入Generator函数即可自动执行，要求内部yield命令后面只能是Thunk函数或Promise对象
+                  <-并发处理：将需要并发的操作都放在数组或对象内，同时添加到yield语句的后面
+                  语法糖：async函数，将‘*’号和yield“替换”成async和await，await后除了Promise还可以是原始类型的值，此函数可以自动执行
+                  <-async函数总是返回一个Promise对象，但之后的then方法需要等待async内部所有的await命令执行结束，符合参数传递规则
+                  <-任何一个await语句后面的Promise对象变为reject状态，整个async函数都会中断执行，reject参数会被catch捕捉
+                  异步遍历器：异步遍历器与同步遍历器最终行为是一致的，只是会先返回Promise对象作为中介
+                  <-区别于同步遍历器，异步遍历采用for await...of循环，此循环也可用于同步遍历器
+                  异步Generator函数：async函数与Generator函数的结合体，异步Generator函数和普通的async函数是封装异步操作的两种方法
+
+document          __文档对象__
+                  新建文档并向网页写入内容：write() 
+                  通过id获取指定的元素：getElementById()，每个元素的id应唯一
+                  通过标签名获取一个元素数组：getElementByTagName()
+                  通过类名获取一个元素数组：getElementByClassName()
+                  通过表单元素的name属性获取元素结点：getElementByName()
+                  由于JavaScript是解释型语言（按顺序执行），待获取元素需要在get之前被加载
+
+console           __控制台对象__
+                  标准输出信息：console.log（待输出的内容），占位符类似于c语言的printf函数（%o 对象的链接，%c CSS格式字符串）
+                  <-console.info用法和console.log完全一样，但info会在输出信息之前加上蓝色图标
+                  <-console.debug用法和console.log类似，但只有在verbose显示级别才有输出信息
+                  标准错误输出信息：console.warn()，console.error()，与log相比有不同的外观
+                  表格显示：console.table()，通常用于表示复合数据
+                  对象查看：console.dir()/dir()代码格式，console.dirxml()/dirxml()目录树格式
+                  条件判断：console.assert（判断条件，输出信息），不满足条件会显示错误，但不会中断程序的执行
+                  计时：console.time()开始计时，console.timeEnd（计时名称）结束计时
+                  统计调用次数：console.count()，接受一个字符串参数用于分类
+                  显示信息分组：console.group()，console.groupEnd()，在两者之间的内容视为同一组，可以嵌套
+                  <-console.groupCollapsed和console.group用法一样，但在第一次显示时内容收起而非展开
+                  清空输出信息：console.clear()，“Preserve log”选项会使此方法失效
+                  控制台API：$_返回上一个表达式的值，$0-$4返回倒数第一个到倒数第五个的值，$（selector）返回第一个匹配的元素
+                  <-$$（selector）返回选中的DOM对象，$x（XPath表达）返回一个数组，inspect（object）打开相关面板
+                  <-getEventListeners（object）返回一个对象，object被登记了回调函数的各种事件，每个事件对应一个数组，其成员为该事件的回调函数
+                  <-keys（object）返回一个数组，包含object的所有键名，values（object）返回一个数组，包含object的所有键值
+                  <-monitorEvents（object，[events]）监听特定对象上发生的特定事件，unmonitorEvents（object，[events]）停止监听
+                  <-clear()清除控制台的历史，copy（object）复制特定DOM元素到剪贴板
+                  debugger语句：用于除错，设置断点，可配合console.log使用

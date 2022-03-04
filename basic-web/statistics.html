@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="./icons/icon.png" type="image/png" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link href="./statistics.css" type="text/css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/chart.js/dist/Chart.js"></script>
+    <script src="./statistics.js"></script>
+    <title>Lecture Statistics</title>
+</head>
+
+<body>
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">SE3026</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="#html">HTML</a>
+                <a class="nav-item nav-link" href="#css">CSS</a>
+                <a class="nav-item nav-link" href="#php">PHP</a>
+                <a class="nav-item nav-link" href="#form">Form</a>
+                <a class="nav-item nav-link" href="#database">Database</a>
+                <a class="nav-item nav-link" href="#javascript">JavaScript</a>
+                <a class="nav-item nav-link" href="#service">Service</a>
+            </div>
+        </div>
+        <button class="btn btn-outline-warning mr-sm-2" data-toggle="modal" data-target="#tip">
+            Click Me: Some Tips
+        </button>
+    </nav>
+
+    <div class="modal fade" id="tip" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tipLabel">How To Fetch Data</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Step1: Choose a lecture such as 'HTML' on the NavBar.</p>
+                    <p>Step2: Set time interval which data belongs to.</p>
+                    <p>Step3: Click the search button and wait...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav id="navigation">
+        <div>
+            <p><embed src="./icons/information.png" width="20" height="20" />&nbsp;Interval</p>
+            <div class="input-group">
+                <span class="input-group-text">Beg</span>
+                <input id="from" type="date" class="form-control" value="2000-01-01" />
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">End</span>
+                <input id="to" type="date" class="form-control" value="2021-01-01" />
+            </div>
+            <button id="submit" class="btn btn-info">Search</button>
+        </div>
+        <div>
+            <p><embed src="./icons/analysis.png" width="20" height="20" />&nbsp;Analysis</p>
+            <a id="toBasic" href="#Basic"><button class="btn btn-info">Basic</button></a>
+            <a id="toTheory" href="#Theory"><button class="btn btn-info">Theory</button></a>
+            <a id="toPractise" href="#Practise"><button class="btn btn-info">Practise</button></a>
+            <a id="toComments" href="#Comments"><button class="btn btn-info">Comments</button></a>
+        </div>
+    </nav>
+
+    <article id="content">
+        <div id="Basic" class="btn btn-secondary btn-lg btn-block">Basic</div>
+        <div id="basic" class="charts card"></div>
+
+        <div id="Theory" class="btn btn-secondary btn-lg btn-block">Theory</div>
+        <div id="theory" class="charts card"></div>
+
+        <div id="Practise" class="btn btn-secondary btn-lg btn-block">Practise</div>
+        <div id="practise" class="charts card"></div>
+
+        <div id="Comments" class="btn btn-secondary btn-lg btn-block">Comments</div>
+        <div class="card">
+            <div id="comments"></div>
+            <button id="more" class="btn btn-outline-secondary">See More</button>
+        </div>
+    </article>
+</body>
+
+</html>

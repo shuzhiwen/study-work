@@ -1,0 +1,17 @@
+makedir d1
+makedir d2
+makefile f1
+makefile f2
+cd d1
+makedir d3
+makefile f1
+makefile f3
+cd d3	
+makefile f4
+
+cd root
+delete f1
+delete d2
+
+cd d1
+delete d3

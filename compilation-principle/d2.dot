@@ -1,0 +1,15 @@
+strict digraph {
+	start [label="start", shape="diamond"]
+	"s1,s3" [label="s1,s3", shape="doublecircle"]
+	"s1,s3,s2" [label="s1,s3,s2", shape="doublecircle"]
+	"s0" -> "s1" [label = a]
+	"s1" -> "s1,s2" [label = a]
+	"s1" -> "s1,s3" [label = b]
+	"s1,s2" -> "s1,s2" [label = a]
+	"s1,s2" -> "s1,s3,s2" [label = b]
+	"s1,s3" -> "s1,s2" [label = a]
+	"s1,s3" -> "s1,s3" [label = b]
+	"s1,s3,s2" -> "s1,s2" [label = a]
+	"s1,s3,s2" -> "s1,s3,s2" [label = b]
+	start -> s0
+}

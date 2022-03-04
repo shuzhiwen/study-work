@@ -1,0 +1,223 @@
+React 官方文档高级指引要点
+
+暂时省略的部分: 
+（1）无障碍
+（2）与第三方库协同
+（3）不使用 ES6
+（4）不使用 JSX
+（5）静态类型检查
+（6）非受控组件
+（7）Web Components
+
+一、代码分割
+（1）打包是一个将文件引入并合并到一个单独文件的过程，最终形成一个 “bundle”。接着在页面上引入该 bundle，整个应用即可一次性加载。
+（2）复杂应用的代码包非常庞大，为了提高加载效率，可以进行代码分割，即“懒加载”当前需要的内容，减少初始加载的代码量。
+（3）在应用中引入代码分割的最佳方式是使用动态 import 方法: import("./math").then(math => math.add(16, 26));
+（4）懒加载的另一种方法是借助 React.lazy 和 Suspense 组件: 不支持服务端渲染；只支持默认导出；一般基于路由进行分割。
+
+二、Context
+（1）Context 提供了一种在组件之间共享值的方式，而不必显式地通过组件树逐层传递 props，多用于共享如主题之类的全局数据。
+（2）React.createContext(defaultValue): 创建一个 Context 对象，undefined 会覆盖 defaultValue。
+（3）Context.Provider: <MyContext.Provider value={/* 某个值 */}>，value 发生变化时，其下所有消费组件都会重新渲染。
+（4）Class.contextType: 为 class 类绑定某个 Context，可以使用 public class fields 语法。
+（5）Context.Consumer: <MyContext.Consumer>{value => /* 基于 context 值进行渲染 */}</MyContext.Consumer>
+（6）动态 Context: Context 的 value 可以是某一对象，包含数据和改变数据的函数，通常和 state 关联。
+（7）为了避免不必要的渲染，Provider 的 value 最好是外部对象引用（通常为父节点的 state）。
+
+三、错误边界
+（1）错误边界是一种 React 组件，这种组件可以捕获并打印发生在其子组件树任何位置的 JavaScript 错误，并且，它会渲染出备用 UI。
+（2）错误边界无法捕获: 事件处理错误；异步代码错误；服务端渲染错误；自身错误。
+（3）错误边界至少需要定义 static getDerivedStateFromError() 和 componentDidCatch() 两个中的一个。
+（4）static getDerivedStateFromError() 用于渲染备用 UI 而 componentDidCatch() 用于打印错误信息。
+（5）错误边界的 render 返回需要展示的 UI: 如判断无错则返回 this.props.children。
+（6）错误边界只针对 React 组件，只有 class 组件才能成为错误边界。
+
+四、Refs 转发
+（1）Ref 转发是一项将 ref 自动地通过组件传递到其一子组件的技巧，多用于高可复用的“叶”组件。
+（2）使用方式: const FancyButton = React.forwardRef((props, ref) => <button ref={ref}></button>)
+（3）必须使用 forwardRef 函数，常规函数和类组件不接受 ref 参数，props 中也不存在 ref。
+（4）由于 Ref 不是 Props 属性，其不能被透传，转发到类中时，外包一层形如（2）的中间件。
+
+五、Fragments
+（1）Fragments 允许将子列表分组，而无需向 DOM 添加额外节点。
+（2）<Fragment> == <> 并且 </Fragment> == </>，只有显示声明才有 key 属性。
+
+六、高阶组件
+（1）高阶组件（HOC）是 React 中用于复用组件逻辑的一种高级技巧: 接收组件形式的参数并返回新组件的“高级”组件，开发模式的一种抽象。
+（2）HOC 不修改原始组件，不使用继承（使用的是组件包装），没用副作用（需要人为控制）。
+（3）分离思想：HOC 不需要关心数据的使用方式或原因，而被包装组件也不需要关心数据是怎么来的。
+（4）HOC 应该透传与自身无关的 props: const { extraProp, ...passThroughProps } = this.props;
+（5）不应该在 render 方法里使用 HOC，因为每次渲染都会返回一个新的组件。
+（6）HOC 的容器组件应该复制原组件的所有静态方法: NewComponent.staticMethod = OldComponent.staticMethod;
+
+七、深入JSX
+（1）JSX 是 React.createElement(component, props, ...children) 函数的语法糖。
+（2）用户定义的组件必须以大写字母开头，如果一个模块包含多个组件，可以使用点语法。
+（3）如果 JSX props 未被赋值，则其默认值为 true，这样做是为了保持和 HTML 中标签属性的行为一致。
+（4）props 属性展开: <Component {...props} />，方便传递整个 props 对象（可以选择性保留某些属性）。
+（5）JSX 会移除行首尾的空格及空行，字符串之间的行会被压缩为一个空格。
+（6）JSX 中的子元素可以是字符串、React元素、元素数组甚至函数。
+（7）false、null、undefined、true 是合法的子元素。但它们并不会被渲染（0 除外）。
+
+八、性能优化
+（1）使用生产版本而不是开发版本（生产版本为 Create React App 生成的 build 文件）
+（2）使用 Chrome 开发者工具检测是否有不相关的组件被错误地更新，改进代码。
+（3）虚拟化长列表，只更新必要的数据而不会因为过量的 DOM 操作卡顿，使用 react-virtualized。
+（4）继承 React.PureComponent，它用当前与之前 props 和 state 值的浅比较复写了 shouldComponentUpdate() 的实现。
+（5）使用 React.PureComponent 时，更新 state 和 props 中的变量需要避免可变对象的产生。
+
+九、Portals
+（1）Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案。
+（2）使用方法: ReactDOM.createPortal(child, container)
+（3）使用场景: 父组件设置了 overflow 或 z-index，需要使子组件可见。
+（4）虽然在 DOM 树中的位置发生了变化，但其他行为（如冒泡和 Context）还是和原来的 React 结构保持一致。
+
+十、Profiler
+（1）开发者工具: 识别应用中渲染较慢的部分，以便针对性做出优化。
+（2）使用方法: <Profiler id="ProfilerID" onRender={callback}>，可嵌套。
+（3）onRender: React 会在 profile 包含的组件树中任何组件“提交”一个更新的时候调用这个函数。
+
+十一、协调（更新逻辑）
+（1）假设: 两个不同类型的元素会产生出不同的树；开发者可以通过 key prop 来暗示哪些子元素在不同的渲染下能保持稳定。
+（2）遍历的一些特性: 只更新修改的那一部分树节点；列表子节点添加 key 属性有利于高效渲染（数组下标作为 key 不是很好的方法）。
+（3）Key 应该具有稳定，可预测，以及列表内唯一的特质（不能使用类似随机数生成的算法）。
+
+十二、Refs & DOM
+（1）Refs 提供了一种方式，允许我们访问 DOM 节点或在 render 方法中创建的 React 元素。
+（2）适用环境: 管理焦点，文本选择或媒体播放；触发强制动画；集成第三方 DOM 库。
+（3）避免使用 refs 来做任何可以通过声明式实现来完成的事情。换言之，属性替代方法。
+（4）使用方法: this.myRef = React.createRef() => <div ref={this.myRef} /> => this.myRef.current
+（5）ref 可用于 HTML 元素和 class 实例，但不能用于函数组件，因为它们没有实例。
+（6）ref 会在 componentDidMount 和 componentDidUpdate 生命周期钩子触发前更新。
+（7）回调 Refs: <input ref={element => this.textInput = element} />，有转发的味道。
+
+十三、Render Props
+（1）术语 “render prop” 是指一种在 React 组件之间使用一个值为函数的 prop 共享代码的简单技术。
+（2）Render Props 可配合高阶组件轻松实现组件包装。
+（3）Render Props 与 React.PureComponent 一起使用时需注意传递的函数 prop 会不会随父组件的更新而变化。
+
+十四、严格模式
+（1）React.StrictMode 是一个用来突出显示应用程序中潜在问题的工具。StrictMode 不会渲染任何可见的 UI。它为其后代元素触发额外的检查和警告。
+（2）功能: 识别不安全的生命周期，使用过时或废弃方法 API 的警告，检测意外的副作用等。
+（3）不建议的方法包括: 过时字符串 ref API；废弃 findDOMNode API；过时 context API
+
+十五、使用 PropTypes 进行类型检查
+（1）使用方法: import PropTypes from 'prop-types' => Component.propTypes = { propName: PropTypes.propType };
+（2）可以通过 PropTypes.element 来确保传递给组件的 children 中只包含一个元素: children: PropTypes.element.isRequired
+（3）设定默认值: Component.defaultProps = { propName: propValue };
+（4）propTypes 类型检查发生在 defaultProps 复制之后，所以类型检查也适用于 defaultProps。
+
+===================================================================================================
+
+React Reference API
+
+暂时省略的部分:
+（1）ReactDOM
+（2）ReactDOMServer
+（3）DOM 元素
+（4）合成事件
+（5）Test Utilities
+（6）Test Renderer
+（7）JavaScript 环境要求
+
+一、React
+（1）React.Component: 使用 ES6 classes 方式定义 React 组件的基类。
+（2）React.PureComponent: 以浅层对比 prop 和 state 的方式来实现了 shouldComponentUpdate 函数。
+（3）React.memo: 高阶组件，与 React.PureComponent 的功能类似，但是只适用于函数组件，可传参控制比较深度。
+（4）React.createElement: 创建 React 元素，JSX 为此 API 的语法糖。
+（5）React.cloneElement: 克隆 element 元素，可以传入 props 数组覆盖属性。
+（6）React.isValidElement: 验证对象是否为 React 元素。
+（7）React.Children: 提供用于处理 this.props.children 不透明数据结构的实用方法。
+（7-1）包括的实用函数: map，forEach，count，only（验证是否只有一个子节点），toArray 等。
+（8）React.Fragment: 减少开发过程中不必要的嵌套。
+（9）React.createRef: 创建一个 Ref 对象。
+（10）React.forwardRef: 接受渲染函数作为参数。React 将使用 props 和 ref 作为参数来调用此函数。此函数应返回 React 节点。
+（11）React.lazy: 动态加载一个组件，有助于减小 bundle 的体积。需要配合 React.Suspense 一起使用。
+（12）React.Suspense: 指定加载指示器，目前只支持 React.lazy 引入的懒加载组件。
+
+二、React.Component
+（1）挂载: constructor > static getDerivedStateFromProps > render > componentDidMount 
+（2）更新: static getDerivedStateFromProps > shouldComponentUpdate > render > getSnapshotBeforeUpdate > componentDidUpdate
+（3）卸载: componentWillUnmount
+（4）错误: static getDerivedStateFromError > componentDidCatch
+（5）render: 必须包含在 class 组件中，应该为纯函数（参数不变时调用结果相同）
+（6）constructor(props): 构造函数（可省），需要 super(props)，不能调用 setState，不建议将 props 赋值给 state。
+（7）componentDidMount: 在组件挂载（插入 DOM 树）后调用，在此处进行一些依赖 DOM 的操作。
+（8）componentDidUpdate(prevProps, prevState, snapshot): 在组件更新后被调用（首次渲染不执行）。
+（9）componentWillUnmount: 在组件卸载或销毁之前调用，通常用于清除 timer，取消订阅等。
+（10）shouldComponentUpdate(nextProps, nextState): 在这个生命周期函数里可以控制是否更新渲染结果（子组件除外）。
+（11）static getDerivedStateFromProps(props, state): 它应返回一个对象来更新 state，如果返回 null 则不更新任何内容。
+（12）getSnapshotBeforeUpdate(prevProps, prevState): 它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）。
+（13）static getDerivedStateFromError(error): 它将抛出的错误作为参数，并返回一个值以更新 state，不允许出现负作用。
+（14）componentDidCatch(error, info): 允许执行副作用，常用语记录错误等。
+（15）setState(updater, [callback]): 将对组件 state 的更改排入队列，它会批量延迟更新。
+（15-1）updater: (state, props) => stateChange，updater 的返回值会与 state 进行浅合并。
+（15-2）callback: 可选的回调函数，由于 setState 是异步操作，其保证在更新后执行，通常用 componentDidUpdate 代替。
+（15-3）updater 也可以替换成对象（常用），但如果 state 后续状态依赖当前状态，则应该使用函数。
+（16）forceUpdate: component.forceUpdate(callback)，强制让组件进行渲染，无视 shouldComponentUpdate 方法（子组件除外）。
+（17）defaultProps: 可以为 Class 组件添加默认 props。这一般用于 props 未赋值，但又不能为 null 的情况。
+（18）displayName: 可为组件设置调试时显示的名称，多用于区分高阶组件等。
+
+三、术语表
+（1）单页面应用: 是一个应用程序，加载单个 HTML 页面以及所需的所有必要资源，和页面的后续交互不需要往返 Server 加载资源。
+（2）ES6, ES2015, ES2016 等: 指 ECMAScript 语言规范标准的最新版本，JavaScript 语言是此标准的一个实现。
+（3）Compiler（编译器）: JavaScript compiler 接收 JavaScript 代码，然后对其进行转换，最终返回不同格式的 JavaScript 代码，如 Babel。
+（4）Bunder（打包工具）: 将许多独立模块组合成一些为浏览器优化的文件，如 Webpack 和 Browserify。
+（5）Package 管理工具: 管理项目依赖的工具，如 npm 和 yarn。
+（6）CDN: 内容分发网络，CDN 会通过一个遍布全球的服务器网络来分发缓存的静态内容。
+（7）JSX: JavaScript 语法扩展，类似于模板语言，属性命名采用小驼峰式命名。
+（8）元素: React 元素是构成 React 应用的基础砖块。元素和组件不同。React 元素是不可变对象。
+（9）组件: React 组件是可复用的小的代码片段，它们返回要在页面中渲染的 React 元素。
+（10）props: props 是 React 组件的输入。它们是从父组件向下传递给子组件的数据，props是只读的。
+（11）props.children: 每个组件都可以获取到 props.children。它包含组件的开始标签和结束标签之间的内容。
+（12）state: 跟踪组件中变化的数据，state 和 props 之间最重要的区别是：state 由组件本身管理，可修改。
+（13）生命周期方法: 用于在组件不同阶段执行自定义功能，分为挂载、更新、卸载三大块。
+（14）受控/非受控组件: 主要针对表单输入，根据其值是否由 React 控制进行划分。
+（15）key: 在创建元素数组时，需要用到的一个特殊字符串属性。key 帮助 React 识别出被修改、添加或删除的 item，需要数组内唯一。
+（16）Ref: 帮助开发者直接访问 DOM 元素或组件实例（谨慎使用）。
+（17）事件: 概念同 JavaScript 事件，小驼峰式命名，如 onClick 等。
+（18）协调: 当组件的 props 或 state 发生变化时，React 通过比较渲染的新旧元素，来决定是否更新。这个过程被称为“协调”。
+
+===================================================================================================
+
+React Hook 新特性
+
+暂时省略的部分:
+（1）Hook API 索引
+（2）Hooks FAQ
+
+一、Hook 简介
+（1）Hook 是 React 16.8 的新增特性，可以在不编写 class 的情况下使用 state 以及其他的 React 特性。
+（2）Hook 是完全可选的，Hook 使你在无需修改组件结构的情况下复用状态逻辑，完全向后兼容，没有移除 class 的计划。
+（3）动机一: 在组件之间复用状态逻辑很难。高阶组件等一些解决方案需要重新组织组件结构，会增加代码的复杂度。
+（4）动机二: 复杂组件变得难以理解。很多时候相互关联且需要对照修改的代码被进行了拆分，而完全不相关的代码却在同一个方法中组合在一起。
+（5）动机三: 难以理解的 class。使用 class 组件会无意中鼓励开发者使用一些让优化措施无效的方案。class 也给目前的工具带来了一些问题。
+
+二、Hook 概览
+（1）Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数。Hook 不能在 class 组件中使用。
+（2）useState 用法: const [count, setCount] = useState(0)。useState 会返回一对值: 当前状态和一个让你更新它的函数。
+（3）useEffect 用法: useEffect(() => { 副作用操作（可返回一个函数用于指定清除副作用） })。useEffect 给函数组件增加了操作副作用的能力。
+（4）Hook 就是 JavaScript 函数，但有额外的使用限制: 只能在函数最外层调用；只能在 React 组件（或自定义 Hook）中调用。
+（4-1）Hook 规则: Hook根据调用顺序来匹配 state 或者 effect，所以不能将其放在条件语句中（一定要在最外层），以避免 bug 的产生。
+（5）useContext 用法: const theme = useContext(ThemeContext);
+（6）useReducer 用法: const [todos, dispatch] = useReducer(todosReducer);
+
+三、使用 State Hook
+（1）useState 是一种新方法，它与 class 里面的 this.state 提供的功能完全相同。state 会在函数退出后被 React 保存（类似闭包）。
+（2）useState 需要传递 state 默认值参数，不同于 class，它可以是数字或字符串（class 只能是对象）。默认参数也可替换成函数，函数返回初始 state。
+（3）useState 的返回值为: 当前 state 以及更新 state 的函数。可以使用数组的结构赋值成对获取（只能成对获取）。
+（4）useState 总是替换 state 而不是合并 state，这意味着不会进行浅复制合并，有利于性能优化。
+（5）和 class 中的 this.setState 一样，useState 返回的 “setState” 函数调用时可传入函数，参数是上一个 state 的值，但是返回值不会自动合并。
+
+四、使用 Effect Hook
+（1）副作用概念: 数据获取、设置订阅、手动更改 React 组件中的 DOM 等。Effect Hook 为函数内使用副作用提供支持，类似生命周期函数。
+（2）useEffect 用于在组件渲染完成后执行某些（副作用）操作，在组件内部使用 useEffect 是为了方便访问 state（原理是闭包）。
+（3）useEffect 与 componentDidMount 和 componentDidUpdate 不同，它不会阻塞浏览器更新屏幕（effect 同步请参考 useLayoutEffect）。
+（4）useEffect 的 effect 函数可以返回一个函数，它将在组件卸载前或组件更新时调用，通常执行一些取消订阅之类的清除工作，以防止内存泄露。
+（5）每次更新都要替换运行新的 effect: 忘记正确地处理 componentDidUpdate 是 React 应用中常见的 bug 来源。
+（6）渲染前更新替换 effect 虽然减少了 bug，但导致了性能问题，useEffect 可接受第二个参数为数组，只要数组内的值没有发生变化，就可以跳过 effect。
+
+五、自定义 Hook
+（1）自定义 Hook 组件必须使用 use 开头注明其符合 Hook 规则。确保只在自定义 Hook 的顶层无条件地调用其他 Hook。
+（2）自定义 Hook 是一种自然遵循 Hook 设计的约定，而不是 React 的特性。自定义 Hook 可以在组件间重复使用，state 和副作用不共享。
+（3）自定义 Hook 解决了以前在 React 组件中无法灵活共享逻辑的问题。尽量避免过早地增加抽象逻辑。可配合 Reducer 管理状态。

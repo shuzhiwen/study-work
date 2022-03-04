@@ -1,0 +1,86 @@
+CSS小结
+
+selector{property:value}         基本语法，即选择器{属性:值}，包含在<style>标签内
+label{...}                       元素选择器通过标签选择元素
+#id{...}                         id选择器，id是标签属性的一种，元素id应互斥，调用前加'#'
+.class={...}                     类选择器，class是标签属性的一种，调用前加'.'
+selector.class                   元素选择器、类选择器和id选择器可以组合使用
+/*...*/                          注释语法
+width/height...                  尺寸属性，和html用法一样
+background-color/color           设置（背景）颜色，和html用法一样
+background-image:url(...)        设置背景图片
+background-repeat:               设置背景重复:repeat水平垂直重复，repeat-x水平重复，repeat-y垂直重复，no-repeat无重复
+background-size:contain          设置背景平铺（可能会失真）
+text-align                       文本对齐，由于span为内联元素，因而右对齐无效，left/center/right
+text-decoration:                 文本修饰：overline上划线，line-through删除线，underline下划线，none去除修饰，blink闪烁
+line-height                      行间距，使用数字或百分比（如200%）
+letter-spacing                   字符间距，使用数字
+word-spacing                     单词间距，使用数字（一般以空格或tab划分的文本）
+text-indent                      首行缩进，使用数字
+text-transform:                  设置大小写：uppercase全部大写，capitalize首字母大写，lowercase全部小写
+white-space:                     设置空白格：normal合并成一个空白格，pre保持原有，pre-warp会自动换行的pre，nowrap不换行直至<br>
+font-size                        设置字体大小，使用数字或者百分比，也可以用em单位
+font-style:                      设置字体样式：normal标准字体，italic斜体
+font-weight:                     设置字体粗细:normal标准粗细，blod加粗
+font-famliy                      设置字库，后跟字体名，如“宋体”
+font：italic 30px 宋体;           属性组合使用，顺序为（style）、（variant）、（weight）、size/（line-height）、famliy
+cursor                           设置鼠标样式，default默认箭头，auto光标，pointer手指，wait忙碌等
+table-layout                     表格布局：automatic单元格大小由内容决定，fixed单元格大小由td宽度决定，只对连续英文有效
+border-collapse                  表格边框：separate边框分隔，collapse边框合并
+border-style:                    边框风格：solid直线，dotted点状，dashed虚线，double双线
+border-color                     设置边框颜色
+border-width                     设置边框宽度，使用数字（像素）
+border:dotted 1px red;           属性组合使用，无顺序要求
+border-(location-)property       设置单处边框，location有top、bottom、left、right，property如上
+div/h1/p:a/b/strong/i/input      块级元素：内联元素，前者占用100%的宽度，后者宽度由内容决定
+padding-left                     左内边距，指元素与左边框的距离，使用数字，其余有right、top、bottom
+padding:x1 x2 x3 x4              x1~4分别是上右下左，缺左用右，缺下用上，缺右用上
+margin-left                      左外边距，指元素边框左侧与元素边框的距离，使用数字，span等内联元素没有上下外边距
+margin:x1 x2...                  类似于padding的用法，但稍有不同
+margin:(0) auto                  块元素居中（前提是设置的宽度<页面宽度）
+a:link/visited/hover/active      超链接的不同状态，状态依次为：未被访问，已访问，鼠标悬停，鼠标点击但未弹起
+display:none                     隐藏一个元素并且释放空间
+visibility:hidden                隐藏一个元素，但不会释放空间
+style.css/<style>                标签冲突时，优先使用最后出现的那一个，可以理解为覆盖
+<style>/style=""                 <style>标签内定义的内容与其他标签内的属性冲突时，优先选择后者
+！important                      设置最高优先级
+<link ...>                       html文件包含.css文件中的style内容：参数rel="stylesheet"，type="text/css"，href=""
+position:absolute                绝对定位，使用top和left控制位置，不会影响原文档中内容的显示顺序（但可能造成内容重叠）
+<div><p><p /><div />             绝对定位标签p的位置与其所在容器有关（若容器没有设置绝对定位，则以body为基准）
+z-index                          设置显示优先级，使用数字，当绝对定位的内容发生重叠时，值大的内容会覆盖值小的内容
+position:relative                相对定位，使用top和left控制位置，在原文档的基础之上移动一段距离
+float:                           设置浮动，浮动会腾出标签原来占用的空间，遇到包含框或另一个浮动的标签则停止，有left和right属性
+img{float:...}                   设置图片浮动，可以实现文字环绕图片的效果
+clear:...                        禁止浮动，取消文字环绕图片的效果，left/right/both/none
+div{float:...}                   设置div浮动，达到水平排列的效果（div默认换行），通常用于菜单栏
+display:block                    设置块级显示，可以将内联元素转换成块级元素
+display:inline                   设置内联显示，可以将块级元素转换成内联元素
+display:inline-block             设置内联-块级显示，既可以设置宽度（块级）又可以不换行（内联）
+display:...                      其他显示方式有：list-item列表、table表格、inline-table前后无换行的表格、table-cell单元格
+overflow:hidden                  清除浮动，防止元素内容“溢出”,用于元素的固定
+line-height                      适合单独一行文本垂直居中，使用数字，也可以设置padding实现垂直居中
+vertical-align:middle            设置文字（图片）垂直居中，前提是（display:table-cell）
+span{float:left}                 设置span之间无空格显示（span标签之间的换行符会变成空格）
+
+
+Flex布局
+
+display:flex(inline-flex)        任何容器（内联元素）都可以指定为Flex布局          
+display:-webkit-flex             Webkit内核的浏览器，需加上-webkit前缀
+float,clear,vertical-align       容器设置为Flex布局后，对子元素无效的属性
+main axis                        水平的主轴，起始（main start），结束（mian end）
+cross axis                       垂直的交叉轴，起始（cross start），结束（cross end）
+flex-direction                   元素的排列方向，row（水平左），row-reverse（水平右），column（垂直上），column-reverse（垂直下）
+flex-wrap                        控制换行，nowrap（不换行），wrap（新行在下），wrap-reverse（新行在上）
+flex-flow                        flex-direction和flex-wrap的组合写法，以“||”分隔
+justify-content                  水平对齐方式，flex-start（左对齐），flex-end（右对齐），center（居中）
+                                 space-between（两端对齐，元素间隔相等），space-around（两侧对齐，类似全局padding）
+align-items                      垂直对齐方式，flex-start（上对齐），flex-end（下对齐），center（居中）
+                                 baseline（元素第一行文字的基线对齐），stretch（如未设置高度，垂直填充至容器边界）
+align-content                    多轴线对齐（只有一根轴线则无效），flex-start，flex-end，center，space-between，space-around，stretch
+order                            项目排列的优先级，数值越小，优先级越高
+flex-flow                        放大比例，默认为0（不放大），数字相等则平分剩余空间
+flex-shrink                      缩小比例，默认为1，0表示不缩小，数字相等表示等比例缩小
+flex-basis                       定义项目占用的空间（浏览器以此为准计算剩余空间）
+flex                             flex-flow、flex-shrink和flex-basis的组合写法，以“||”分隔，auto（1 1 auto），none（0 0 auto）
+align-self                       子项目的自定义布局，可覆盖align-item属性，若无父项目，则等同于stretch

@@ -1,0 +1,68 @@
+#navbar {
+    min-height: 10vh;
+}
+
+#navigation {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: lightgray;
+    width: 20vw;
+    height: 90vh;
+    padding: 1vw;
+    margin-top: 10vh;
+}
+
+#navigation>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+#navigation>div>p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#navigation button {
+    width: 18vw;
+    margin-top: 2vh;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20vw;
+    padding: 10vh 0 10vh 1.5vw;
+    background-color: #EEEEEE;
+}
+
+.charts {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 5vh;
+}
+
+.chart {
+    width: 24.5vw;
+    height: 27vw;
+    margin: 0.55vw;
+    border: 2px solid skyblue;
+    border-radius: 5px;
+}
+
+#comments {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.comment {
+    width: 17vw;
+    margin: 2vh;
+}
