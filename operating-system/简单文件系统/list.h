@@ -3,9 +3,9 @@
 #include "common.h"
 
 struct FileTree {
-    bool isDirectory;   //类型标识
-    char name[20];      //文件夹或文件的名称
-    struct File *file;  //文件地址，如是目录则为NULL
+    bool isDirectory;   // 类型标识
+    char name[20];      // 文件夹或文件的名称
+    struct File *file;  // 文件地址，如是目录则为NULL
     struct List *children;
 };
 

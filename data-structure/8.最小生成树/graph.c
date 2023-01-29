@@ -124,7 +124,7 @@ bool graph_is_vertex_connected(struct Graph *g, int u, int v) {
     }
 }
 
-//判断u是否为v的入度，如果是，返回u到v的路径的权值
+// 判断u是否为v的入度，如果是，返回u到v的路径的权值
 int get_weight(struct Graph *g, int u, int v) {
     struct ListNode *p = Vertex_list(g, u)->head;
 
@@ -347,14 +347,14 @@ void graph_spanning_tree_kruskal(struct Graph *g, struct Graph *t) {
         int weight;
         int pre;
         int next;
-    } * edges;
+    } *edges;
     int index = 0;
     bool *visited = malloc(sizeof(int) * g->v);
 
     graph_init(t, g->v, g->type);
     edges = malloc(sizeof(struct edge) * g->e);
 
-    for (int i = 0; i < g->v; i++) {  //初始化边集
+    for (int i = 0; i < g->v; i++) {  // 初始化边集
         struct ListNode *p = Vertex_list(g, i)->head;
 
         while (p != NULL) {
@@ -380,7 +380,7 @@ void graph_spanning_tree_kruskal(struct Graph *g, struct Graph *t) {
         }
     }
 
-    for (int i = 0; i < g->e; i++) {  //排序
+    for (int i = 0; i < g->e; i++) {  // 排序
         for (int j = 0; j < g->e; j++) {
             if (edges[i].weight < edges[j].weight) {
                 struct edge tmp = edges[i];
@@ -391,7 +391,7 @@ void graph_spanning_tree_kruskal(struct Graph *g, struct Graph *t) {
     }
 
     memset(visited, false, sizeof(int) * g->v);
-    for (int i = 0; i < g->e; i++) {  //生成树
+    for (int i = 0; i < g->e; i++) {  // 生成树
         if (!visited[edges[i].pre] || !visited[edges[i].next]) {
             graph_add_edge(t, edges[i].pre, edges[i].next, edges[i].weight);
             visited[edges[i].pre] = true;

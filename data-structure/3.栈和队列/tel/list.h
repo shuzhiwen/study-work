@@ -5,14 +5,14 @@
 typedef int DataType;
 
 struct ListNode {
-  DataType data;
-  struct ListNode *next;
+    DataType data;
+    struct ListNode *next;
 };
 
 struct List {
-  int size;
-  struct ListNode *head;
-  struct ListNode *tail;
+    int size;
+    struct ListNode *head;
+    struct ListNode *tail;
 };
 
 // Init a list
@@ -21,8 +21,7 @@ void list_init(struct List *list);
 void list_destroy(struct List *list);
 
 // Insert `data` after node `node`
-enum Status list_insert_after(struct List *list, struct ListNode *node,
-                              DataType data);
+enum Status list_insert_after(struct List *list, struct ListNode *node, DataType data);
 // Insert `data` at front of `list`
 enum Status list_push_front(struct List *list, DataType data);
 enum Status list_push_back(struct List *list, DataType data);

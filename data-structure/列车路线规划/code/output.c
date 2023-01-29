@@ -2,7 +2,7 @@
 
 #define INF 29999
 
-//更新图的信息
+// 更新图的信息
 void relax(struct trietree **path, struct Vector *vec, struct trietree *cur, int time_limit,
            char *req, int *total) {
     int interim, target;
@@ -30,7 +30,7 @@ void relax(struct trietree **path, struct Vector *vec, struct trietree *cur, int
     }
 }
 
-//寻找下一个站点
+// 寻找下一个站点
 int find_next_station(struct Vector *vec, int *total, bool *visited) {
     int target = 0, tmp = INF;
 
@@ -44,7 +44,7 @@ int find_next_station(struct Vector *vec, int *total, bool *visited) {
     return target;
 }
 
-//更新时间限制
+// 更新时间限制
 void update_time_limit(struct Vector *vec, int *time_limit, struct trietree **path, int next_num) {
     struct ListNode *p = NULL;
 
@@ -76,7 +76,7 @@ void show_ans(struct trietree *root, struct Vector *vec, char *ear_time, char *b
     cur_num = station_ser_num(vec, begin);  // cur_num保存begin对应站点的编号
     total[cur_num] = 0;
     while (visited[cur_num] != true) {
-        visited[cur_num] = true;  //标记已访问
+        visited[cur_num] = true;  // 标记已访问
 
         // cur保存cur_num对应站点在字典树中的地址
         cur = trietree_find(root, vector_at(vec, cur_num)->eng_name);
@@ -88,7 +88,7 @@ void show_ans(struct trietree *root, struct Vector *vec, char *ear_time, char *b
     ans_print(root, vec, path, total, vec->size, ear_time, begin, end, req);
 }
 
-//输出窗口的初始化
+// 输出窗口的初始化
 void ans_print(struct trietree *root, struct Vector *vec, struct trietree **path, int *total, int n,
                char *ear_time, char *begin, char *end, char *req) {
     system("clear");
@@ -121,7 +121,7 @@ void ans_print(struct trietree *root, struct Vector *vec, struct trietree **path
     }
 }
 
-//计算总时间，总花费，总中转次数
+// 计算总时间，总花费，总中转次数
 void time_fare_tran(struct trietree **path, struct Vector *vec, int *total, char *req, int begin,
                     int end, int n) {
     int fare_ans = 0, time_ans = 0, tran_ans = 0, i = end, road_i = 0;
@@ -156,7 +156,7 @@ void time_fare_tran(struct trietree **path, struct Vector *vec, int *total, char
     free(road);
 }
 
-//输出乘车步骤
+// 输出乘车步骤
 void road_print(struct route *road, int n, int fare, int time_ans, int tran) {
     for (int i = n - 1; i >= 0; i--) {
         printf("\tStep %d: Train: %s   %s => %s\n", n - i, road[i].tra_num, road[i].from,

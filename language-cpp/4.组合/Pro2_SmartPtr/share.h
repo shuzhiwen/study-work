@@ -16,5 +16,5 @@ class share {
 
    private:
     A* point;
-    int* count;  //引入应用计数, 注意此处不能为int count; 思考一下原因
+    int* count;  // 引入应用计数, 注意此处不能为int count; 思考一下原因
 };

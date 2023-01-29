@@ -110,7 +110,7 @@ struct BTree *btree_build_search_tree(char *s) {
 
     for (int i = 1; i < strlen(s); i++) {
         struct BTree *p = root, *q = NULL;
-        int flag = 0;  //标记当前节点是其父节点的左子树还是右子树
+        int flag = 0;  // 标记当前节点是其父节点的左子树还是右子树
 
         while (1) {
             if (p != NULL) {

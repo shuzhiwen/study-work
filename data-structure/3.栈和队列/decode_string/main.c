@@ -8,14 +8,14 @@ void decode_string(char *s) {
     stack_init(&stack, 10);
 
     for (int i = 0; s[i] != 0; i++) {
-        if ((s[i] >= '0' && s[i] <= '9') || s[i] == '[') {  //遇到数字或左括弧压栈
+        if ((s[i] >= '0' && s[i] <= '9') || s[i] == '[') {  // 遇到数字或左括弧压栈
             stack_push(&stack, s[i] - '0');
         }
 
-        if (s[i] == ']') {  //遇到右括弧
+        if (s[i] == ']') {  // 遇到右括弧
             int j = 0, Brackets_sum = 0;
 
-            for (j = i - 1;; j--) {  //找到对应的左括弧
+            for (j = i - 1;; j--) {  // 找到对应的左括弧
                 if (s[j] == ']') {
                     Brackets_sum++;
                 } else if (s[j] == '[') {
@@ -27,21 +27,21 @@ void decode_string(char *s) {
                 }
             }
 
-            stack_pop(&stack);  //弹出左括弧
+            stack_pop(&stack);  // 弹出左括弧
 
             if (j != 0 && s[j - 1] && s[j - 1] > '0' &&
-                s[j - 1] <= '9') {  //若前面是数字则将数字减一
+                s[j - 1] <= '9') {  // 若前面是数字则将数字减一
                 stack_push(&stack, stack_pop(&stack) - 1);
 
-                if (stack_peek(&stack)) {  //数字不为０时继续遍历直到数字为０
+                if (stack_peek(&stack)) {  // 数字不为０时继续遍历直到数字为０
                     i = j - 1;
-                } else {  //数字为０时弹出
+                } else {  // 数字为０时弹出
                     stack_pop(&stack);
                 }
             }
         }
 
-        if (s[i] >= 'a' && s[i] <= 'z') {  //遇到字母输出
+        if (s[i] >= 'a' && s[i] <= 'z') {  // 遇到字母输出
             printf("%c", s[i]);
         }
     }

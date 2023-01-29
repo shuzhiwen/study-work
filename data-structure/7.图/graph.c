@@ -105,7 +105,7 @@ bool graph_is_connected(struct Graph *g) {
     return true;
 }
 
-//判断u到v是否有路径(辅助)
+// 判断u到v是否有路径(辅助)
 bool have_road_between_uv(struct Graph *g, int u, int v) {
     int *visit = malloc(sizeof(int) * g->v);
     int *queue = malloc(sizeof(int) * g->v);
@@ -140,7 +140,7 @@ bool graph_is_vertex_connected(struct Graph *g, int u, int v) {
     return have_road_between_uv(g, u, v) && have_road_between_uv(g, v, u);
 }
 
-//辅助
+// 辅助
 int find_next_vertex(struct Graph *g, int u, int index) {
     for (int i = index + 1; i < g->v; i++) {
         if (value(g, u, i) != 0) {
@@ -229,7 +229,7 @@ bool graph_is_connected_component(struct Graph *g, struct Graph *sg) {
 
     for (int i = 0; i < g->v; i++) {
         if (is_other_vertex(g, sg, i)) {
-            for (int j = 0; j < g->v; j++) {  //增边
+            for (int j = 0; j < g->v; j++) {  // 增边
                 if (value(g, i, j)) {
                     graph_add_edge(sg, i, j, value(g, i, j));
                 }
@@ -240,9 +240,9 @@ bool graph_is_connected_component(struct Graph *g, struct Graph *sg) {
 
             if (graph_is_connected(sg)) {
                 return false;
-            }  //判断
+            }  // 判断
 
-            for (int j = 0; j < g->v; j++) {  //删边
+            for (int j = 0; j < g->v; j++) {  // 删边
                 if (value(sg, i, j)) {
                     graph_delete_edge(sg, i, j);
                 }

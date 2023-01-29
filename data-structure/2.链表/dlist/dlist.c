@@ -28,10 +28,10 @@ enum Status dlist_insert_after(struct DList *list, struct DListNode *node, DataT
     new_node->data = data;
 
     if (node == NULL) {
-        if (dlist_size(list) == 0) {  //待插入链表为空
+        if (dlist_size(list) == 0) {  // 待插入链表为空
             list->tail = list->head = new_node;
             new_node->prev = new_node->next = NULL;
-        } else {  //头部插入
+        } else {  // 头部插入
             new_node->next = list->head;
             new_node->prev = NULL;
             list->head->prev = new_node;
@@ -39,12 +39,12 @@ enum Status dlist_insert_after(struct DList *list, struct DListNode *node, DataT
         }
 
     } else {
-        if (node->next == NULL) {  //尾部插入
+        if (node->next == NULL) {  // 尾部插入
             node->next = new_node;
             new_node->prev = node;
             new_node->next = NULL;
             list->tail = new_node;
-        } else {  //中部插入
+        } else {  // 中部插入
             new_node->next = node->next;
             new_node->prev = node;
             node->next->prev = new_node;
@@ -67,10 +67,10 @@ enum Status dlist_insert_before(struct DList *list, struct DListNode *node, Data
     new_node->data = data;
 
     if (node == NULL) {
-        if (dlist_size(list) == 0) {  //待插入链表为空
+        if (dlist_size(list) == 0) {  // 待插入链表为空
             list->tail = list->head = new_node;
             new_node->prev = new_node->next = NULL;
-        } else {  //尾部插入
+        } else {  // 尾部插入
             node->next = new_node;
             new_node->prev = node;
             new_node->next = NULL;
@@ -78,12 +78,12 @@ enum Status dlist_insert_before(struct DList *list, struct DListNode *node, Data
         }
 
     } else {
-        if (node->prev == NULL) {  //头部插入
+        if (node->prev == NULL) {  // 头部插入
             new_node->next = list->head;
             new_node->prev = NULL;
             list->head->prev = new_node;
             list->head = new_node;
-        } else {  //中部插入
+        } else {  // 中部插入
             new_node->prev = node->prev;
             new_node->next = node;
             node->prev->next = new_node;
@@ -111,15 +111,15 @@ enum Status dlist_remove(struct DList *list, struct DListNode *node) {
         return STATUS_ERR_INVALID_RANGE;
     }
 
-    if (node->prev == NULL && node->next == NULL) {  //只有一个元素
+    if (node->prev == NULL && node->next == NULL) {  // 只有一个元素
         dlist_init(list);
-    } else if (node->prev == NULL) {  //头部删除
+    } else if (node->prev == NULL) {  // 头部删除
         node->next->prev = NULL;
         list->head = list->head->next;
-    } else if (node->next == NULL) {  //尾部删除
+    } else if (node->next == NULL) {  // 尾部删除
         node->prev->next = NULL;
         list->tail = list->tail->prev;
-    } else {  //中部删除
+    } else {  // 中部删除
         node->prev->next = node->next;
         node->next->prev = node->prev;
     }

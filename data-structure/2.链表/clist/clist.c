@@ -26,13 +26,13 @@ enum Status clist_insert_after(struct CList *list, struct CListNode *node, DataT
 
     if (node == NULL) {
         // Insertion at the head of the list
-        if (list->head == NULL) {  //链表为空
+        if (list->head == NULL) {  // 链表为空
             list->head = new_node;
             new_node->next = new_node;
-        } else {  //插入成为头节点
+        } else {  // 插入成为头节点
             struct CListNode *p = list->head;
 
-            while (p->next != list->head) {  //使得ｐ节点成为ｈｅａｄ节点的上一个节点
+            while (p->next != list->head) {  // 使得ｐ节点成为ｈｅａｄ节点的上一个节点
                 p = p->next;
             }
 
@@ -59,7 +59,7 @@ enum Status clist_remove_after(struct CList *list, struct CListNode *node) {
         return STATUS_ERR_INVALID_RANGE;
     }
 
-    if (list->head->next == list->head) {  //只有一个节点
+    if (list->head->next == list->head) {  // 只有一个节点
         old_node = list->head;
         clist_init(list);
     } else {
@@ -67,7 +67,7 @@ enum Status clist_remove_after(struct CList *list, struct CListNode *node) {
             // Remove from the head of the list
             struct CListNode *p = list->head;
 
-            while (p->next != list->head) {  //使得ｐ节点成为ｈｅａｄ节点的上一个节点
+            while (p->next != list->head) {  // 使得ｐ节点成为ｈｅａｄ节点的上一个节点
                 p = p->next;
             }
 

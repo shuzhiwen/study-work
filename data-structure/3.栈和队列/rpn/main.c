@@ -23,7 +23,7 @@ int rpn(char **tokens, int len) {
     stack_init(&s, len);
 
     for (int i = 0; i < len; i++) {
-        if (tokens[i][0] >= '0' && tokens[i][0] <= '9') {  //遇到数字压栈
+        if (tokens[i][0] >= '0' && tokens[i][0] <= '9') {  // 遇到数字压栈
             int j = 0, sum = 0;
 
             while (tokens[i][j] != 0) {
@@ -34,7 +34,7 @@ int rpn(char **tokens, int len) {
             stack_push(&s, sum);
         }
 
-        if (tokens[i][0] == '+') {  //遇到符号弹出数字并求值，将结果压栈
+        if (tokens[i][0] == '+') {  // 遇到符号弹出数字并求值，将结果压栈
             if (stack_top(&s) > 40) {
                 char sign = stack_pop(&s);
                 stack_push(&s, calculate(stack_pop(&s), stack_pop(&s), sign));
@@ -75,7 +75,7 @@ int rpn(char **tokens, int len) {
         }
     }
 
-    if (stack_top(&s) < '0' || stack_top(&s) > '9') {  //字符串遍历结束
+    if (stack_top(&s) < '0' || stack_top(&s) > '9') {  // 字符串遍历结束
         char sign = stack_pop(&s);
         stack_push(&s, calculate(stack_pop(&s), stack_pop(&s), sign));
     }

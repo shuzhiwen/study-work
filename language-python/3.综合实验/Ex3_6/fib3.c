@@ -2885,50 +2885,50 @@ static CYTHON_INLINE Py_ssize_t __Pyx_PyIndex_AsSsize_t(PyObject *b) {
             switch (size) {
                 case 2:
                     if (8 * sizeof(Py_ssize_t) > 2 * PyLong_SHIFT) {
-                        return (Py_ssize_t)(
-                            ((((size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0]));
+                        return (Py_ssize_t)(((((size_t)digits[1]) << PyLong_SHIFT) |
+                                             (size_t)digits[0]));
                     }
                     break;
                 case -2:
                     if (8 * sizeof(Py_ssize_t) > 2 * PyLong_SHIFT) {
-                        return -(Py_ssize_t)(
-                            ((((size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0]));
+                        return -(Py_ssize_t)(((((size_t)digits[1]) << PyLong_SHIFT) |
+                                              (size_t)digits[0]));
                     }
                     break;
                 case 3:
                     if (8 * sizeof(Py_ssize_t) > 3 * PyLong_SHIFT) {
-                        return (Py_ssize_t)(
-                            ((((((size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1])
-                              << PyLong_SHIFT) |
-                             (size_t)digits[0]));
+                        return (Py_ssize_t)((
+                            (((((size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1])
+                             << PyLong_SHIFT) |
+                            (size_t)digits[0]));
                     }
                     break;
                 case -3:
                     if (8 * sizeof(Py_ssize_t) > 3 * PyLong_SHIFT) {
-                        return -(Py_ssize_t)(
-                            ((((((size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1])
-                              << PyLong_SHIFT) |
-                             (size_t)digits[0]));
+                        return -(Py_ssize_t)((
+                            (((((size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1])
+                             << PyLong_SHIFT) |
+                            (size_t)digits[0]));
                     }
                     break;
                 case 4:
                     if (8 * sizeof(Py_ssize_t) > 4 * PyLong_SHIFT) {
-                        return (Py_ssize_t)(
-                            ((((((((size_t)digits[3]) << PyLong_SHIFT) | (size_t)digits[2])
-                                << PyLong_SHIFT) |
-                               (size_t)digits[1])
-                              << PyLong_SHIFT) |
-                             (size_t)digits[0]));
+                        return (Py_ssize_t)((
+                            (((((((size_t)digits[3]) << PyLong_SHIFT) | (size_t)digits[2])
+                               << PyLong_SHIFT) |
+                              (size_t)digits[1])
+                             << PyLong_SHIFT) |
+                            (size_t)digits[0]));
                     }
                     break;
                 case -4:
                     if (8 * sizeof(Py_ssize_t) > 4 * PyLong_SHIFT) {
-                        return -(Py_ssize_t)(
-                            ((((((((size_t)digits[3]) << PyLong_SHIFT) | (size_t)digits[2])
-                                << PyLong_SHIFT) |
-                               (size_t)digits[1])
-                              << PyLong_SHIFT) |
-                             (size_t)digits[0]));
+                        return -(Py_ssize_t)((
+                            (((((((size_t)digits[3]) << PyLong_SHIFT) | (size_t)digits[2])
+                               << PyLong_SHIFT) |
+                              (size_t)digits[1])
+                             << PyLong_SHIFT) |
+                            (size_t)digits[0]));
                     }
                     break;
             }

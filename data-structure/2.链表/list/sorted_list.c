@@ -18,12 +18,12 @@ struct ListNode *find_fit_location(struct List *dst, struct ListNode *node) {
 
 // TODO:
 enum Status merge_sorted_lists(struct List *dst, struct List *src1,
-                               struct List *src2) {  //复杂度O(m+n)
+                               struct List *src2) {  // 复杂度O(m+n)
     struct ListNode *p1 = src1->head, *p2 = src2->head;
 
     while (p1 != NULL || p2 != NULL) {
         if (p1 == NULL && p2 != NULL) {  // src1为空但src2还未移动完
-            if (dst->head == NULL) {     //特殊情况：当且仅当src１传入空指针
+            if (dst->head == NULL) {     // 特殊情况：当且仅当src１传入空指针
                 dst->head = dst->tail = p2;
                 p2 = p2->next;
             }
@@ -36,7 +36,7 @@ enum Status merge_sorted_lists(struct List *dst, struct List *src1,
             }
             break;
         } else if (p2 == NULL && p1 != NULL) {  // src2为空但src1还未移动完
-            if (dst->head == NULL) {            //特殊情况：当且仅当src2传入空指针
+            if (dst->head == NULL) {            // 特殊情况：当且仅当src2传入空指针
                 dst->head = dst->tail = p1;
                 p1 = p1->next;
             }
@@ -51,7 +51,7 @@ enum Status merge_sorted_lists(struct List *dst, struct List *src1,
         }
 
         if (p1->data < p2->data) {
-            if (dst->head == NULL) {  //待插入的链表为空
+            if (dst->head == NULL) {  // 待插入的链表为空
                 dst->head = dst->tail = p1;
             } else {
                 dst->tail->next = p1;
@@ -62,7 +62,7 @@ enum Status merge_sorted_lists(struct List *dst, struct List *src1,
             p1 = p1->next;
 
         } else {
-            if (dst->head == NULL) {  //待插入的链表为空
+            if (dst->head == NULL) {  // 待插入的链表为空
                 dst->head = dst->tail = p2;
             } else {
                 dst->tail->next = p2;
@@ -81,7 +81,7 @@ enum Status merge_sorted_lists(struct List *dst, struct List *src1,
 
 // TODO:
 enum Status merge_multiple_lists(struct List *dst, struct List **srcs,
-                                 int n) {  //插入排序，适用于三个以上的链表
+                                 int n) {  // 插入排序，适用于三个以上的链表
     if (srcs == NULL) {
         return STATUS_ERR_NULL_LIST;
     } else {
@@ -94,14 +94,14 @@ enum Status merge_multiple_lists(struct List *dst, struct List **srcs,
         while (p != NULL) {
             struct ListNode *s = find_fit_location(dst, p), *q = p->next;
 
-            if (s == NULL) {  //头部插入
+            if (s == NULL) {  // 头部插入
                 p->next = dst->head;
                 dst->head = p;
-            } else if (s->next == NULL) {  //尾部插入
+            } else if (s->next == NULL) {  // 尾部插入
                 dst->tail->next = p;
                 dst->tail = p;
                 dst->tail->next = NULL;
-            } else {  //中部插入
+            } else {  // 中部插入
                 p->next = s->next;
                 s->next = p;
             }

@@ -1934,11 +1934,11 @@ static PyObject *__Pyx_PyInt_SubtractObjC(PyObject *op1, PyObject *op2, CYTHON_U
                         break;
 #ifdef HAVE_LONG_LONG
                     } else if (8 * sizeof(PY_LONG_LONG) - 1 > 3 * PyLong_SHIFT) {
-                        lla = -(PY_LONG_LONG)(
-                            ((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) |
-                               (unsigned PY_LONG_LONG)digits[1])
-                              << PyLong_SHIFT) |
-                             (unsigned PY_LONG_LONG)digits[0]));
+                        lla = -(
+                            PY_LONG_LONG)(((((((unsigned PY_LONG_LONG)digits[2]) << PyLong_SHIFT) |
+                                             (unsigned PY_LONG_LONG)digits[1])
+                                            << PyLong_SHIFT) |
+                                           (unsigned PY_LONG_LONG)digits[0]));
                         goto long_long;
 #endif
                     }
@@ -1970,13 +1970,13 @@ static PyObject *__Pyx_PyInt_SubtractObjC(PyObject *op1, PyObject *op2, CYTHON_U
                         break;
 #ifdef HAVE_LONG_LONG
                     } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
-                        lla = -(PY_LONG_LONG)(
-                            ((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) |
-                                 (unsigned PY_LONG_LONG)digits[2])
-                                << PyLong_SHIFT) |
-                               (unsigned PY_LONG_LONG)digits[1])
-                              << PyLong_SHIFT) |
-                             (unsigned PY_LONG_LONG)digits[0]));
+                        lla = -(PY_LONG_LONG)((
+                            (((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) |
+                                (unsigned PY_LONG_LONG)digits[2])
+                               << PyLong_SHIFT) |
+                              (unsigned PY_LONG_LONG)digits[1])
+                             << PyLong_SHIFT) |
+                            (unsigned PY_LONG_LONG)digits[0]));
                         goto long_long;
 #endif
                     }
@@ -1991,13 +1991,13 @@ static PyObject *__Pyx_PyInt_SubtractObjC(PyObject *op1, PyObject *op2, CYTHON_U
                         break;
 #ifdef HAVE_LONG_LONG
                     } else if (8 * sizeof(PY_LONG_LONG) - 1 > 4 * PyLong_SHIFT) {
-                        lla = (PY_LONG_LONG)(
-                            ((((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) |
-                                 (unsigned PY_LONG_LONG)digits[2])
-                                << PyLong_SHIFT) |
-                               (unsigned PY_LONG_LONG)digits[1])
-                              << PyLong_SHIFT) |
-                             (unsigned PY_LONG_LONG)digits[0]));
+                        lla = (PY_LONG_LONG)((
+                            (((((((unsigned PY_LONG_LONG)digits[3]) << PyLong_SHIFT) |
+                                (unsigned PY_LONG_LONG)digits[2])
+                               << PyLong_SHIFT) |
+                              (unsigned PY_LONG_LONG)digits[1])
+                             << PyLong_SHIFT) |
+                            (unsigned PY_LONG_LONG)digits[0]));
                         goto long_long;
 #endif
                     }
@@ -3402,50 +3402,50 @@ static CYTHON_INLINE Py_ssize_t __Pyx_PyIndex_AsSsize_t(PyObject *b) {
             switch (size) {
                 case 2:
                     if (8 * sizeof(Py_ssize_t) > 2 * PyLong_SHIFT) {
-                        return (Py_ssize_t)(
-                            ((((size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0]));
+                        return (Py_ssize_t)(((((size_t)digits[1]) << PyLong_SHIFT) |
+                                             (size_t)digits[0]));
                     }
                     break;
                 case -2:
                     if (8 * sizeof(Py_ssize_t) > 2 * PyLong_SHIFT) {
-                        return -(Py_ssize_t)(
-                            ((((size_t)digits[1]) << PyLong_SHIFT) | (size_t)digits[0]));
+                        return -(Py_ssize_t)(((((size_t)digits[1]) << PyLong_SHIFT) |
+                                              (size_t)digits[0]));
                     }
                     break;
                 case 3:
                     if (8 * sizeof(Py_ssize_t) > 3 * PyLong_SHIFT) {
-                        return (Py_ssize_t)(
-                            ((((((size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1])
-                              << PyLong_SHIFT) |
-                             (size_t)digits[0]));
+                        return (Py_ssize_t)((
+                            (((((size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1])
+                             << PyLong_SHIFT) |
+                            (size_t)digits[0]));
                     }
                     break;
                 case -3:
                     if (8 * sizeof(Py_ssize_t) > 3 * PyLong_SHIFT) {
-                        return -(Py_ssize_t)(
-                            ((((((size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1])
-                              << PyLong_SHIFT) |
-                             (size_t)digits[0]));
+                        return -(Py_ssize_t)((
+                            (((((size_t)digits[2]) << PyLong_SHIFT) | (size_t)digits[1])
+                             << PyLong_SHIFT) |
+                            (size_t)digits[0]));
                     }
                     break;
                 case 4:
                     if (8 * sizeof(Py_ssize_t) > 4 * PyLong_SHIFT) {
-                        return (Py_ssize_t)(
-                            ((((((((size_t)digits[3]) << PyLong_SHIFT) | (size_t)digits[2])
-                                << PyLong_SHIFT) |
-                               (size_t)digits[1])
-                              << PyLong_SHIFT) |
-                             (size_t)digits[0]));
+                        return (Py_ssize_t)((
+                            (((((((size_t)digits[3]) << PyLong_SHIFT) | (size_t)digits[2])
+                               << PyLong_SHIFT) |
+                              (size_t)digits[1])
+                             << PyLong_SHIFT) |
+                            (size_t)digits[0]));
                     }
                     break;
                 case -4:
                     if (8 * sizeof(Py_ssize_t) > 4 * PyLong_SHIFT) {
-                        return -(Py_ssize_t)(
-                            ((((((((size_t)digits[3]) << PyLong_SHIFT) | (size_t)digits[2])
-                                << PyLong_SHIFT) |
-                               (size_t)digits[1])
-                              << PyLong_SHIFT) |
-                             (size_t)digits[0]));
+                        return -(Py_ssize_t)((
+                            (((((((size_t)digits[3]) << PyLong_SHIFT) | (size_t)digits[2])
+                               << PyLong_SHIFT) |
+                              (size_t)digits[1])
+                             << PyLong_SHIFT) |
+                            (size_t)digits[0]));
                     }
                     break;
             }

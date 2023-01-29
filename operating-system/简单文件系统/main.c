@@ -11,7 +11,7 @@ int main() {
     vector_init(&vec, 10);
     filetree_init(p, true, "root", NULL);
 
-    while (true) {  //输入要求：一个命令不带参数或带一个参数
+    while (true) {  // 输入要求：一个命令不带参数或带一个参数
         printf("> ");
         scanf("%s", &command);
         if (strcmp(command, "ls") == 0) {

@@ -2,7 +2,7 @@
 
 char ear_time[10], req[20], begin[20], end[20];
 
-//输入用户需求
+// 输入用户需求
 int fourth(struct trietree *root, struct Vector *v, int sign) {
     main_window(root, v, sign);
 
@@ -36,7 +36,7 @@ int fourth(struct trietree *root, struct Vector *v, int sign) {
     transformation_scene(root, v, sign);
 }
 
-//输入目的地
+// 输入目的地
 int third(struct trietree *root, struct Vector *v, int sign) {
     main_window(root, v, sign);
 
@@ -61,7 +61,7 @@ int third(struct trietree *root, struct Vector *v, int sign) {
     transformation_scene(root, v, sign);
 }
 
-//输入出发地
+// 输入出发地
 int second(struct trietree *root, struct Vector *v, int sign) {
     main_window(root, v, sign);
 
@@ -86,7 +86,7 @@ int second(struct trietree *root, struct Vector *v, int sign) {
     transformation_scene(root, v, sign);
 }
 
-//输入时间
+// 输入时间
 int first(struct trietree *root, struct Vector *v, int sign) {
     main_window(root, v, sign);
 
@@ -111,7 +111,7 @@ int first(struct trietree *root, struct Vector *v, int sign) {
     transformation_scene(root, v, sign);
 }
 
-//转换“场景”
+// 转换“场景”
 void transformation_scene(struct trietree *root, struct Vector *v, int sign) {
     if (abs(sign) < 1) {
         main_window(root, v, sign);
@@ -128,7 +128,7 @@ void transformation_scene(struct trietree *root, struct Vector *v, int sign) {
     }
 }
 
-//主界面的显示
+// 主界面的显示
 void main_window(struct trietree *root, struct Vector *v, int sign) {
     system("clear");
 

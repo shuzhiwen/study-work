@@ -265,7 +265,7 @@ void graph_dijikstra(struct Graph *g, int v) {
     while (visited[now] != true && graph_out_degree(g, now) != 0) {
         visited[now] = true;
         g->path[now] = from;
-        for (int i = 0; i < g->v; i++) {  //更新
+        for (int i = 0; i < g->v; i++) {  // 更新
             dis = matrix_get(&g->m, now, i) + g->dists[now];
             if (dis < g->dists[i]) {
                 g->dists[i] = dis;
@@ -274,7 +274,7 @@ void graph_dijikstra(struct Graph *g, int v) {
 
         from = now;
         dis = INF;
-        for (int i = 0; i < g->v; i++) {  //找下一条边
+        for (int i = 0; i < g->v; i++) {  // 找下一条边
             if (visited[i] == false && g->dists[i] < dis) {
                 dis = g->dists[i];
                 now = i;
@@ -283,7 +283,7 @@ void graph_dijikstra(struct Graph *g, int v) {
     }
 }
 
-//辅助函数，实现矩阵的复制
+// 辅助函数，实现矩阵的复制
 void copy_matrix(struct Matrix *m1, struct Matrix *m2) {
     for (int i = 0; i < m2->rows; i++) {
         for (int j = 0; j < m2->cols; j++) {
@@ -302,7 +302,7 @@ void graph_floyd(struct Graph *g, struct Matrix *dists) {
     copy_matrix(&m, dists);
     graph_matrix_init(g);
 
-    for (int i = 0; i < g->v; i++) {  //逐个加点
+    for (int i = 0; i < g->v; i++) {  // 逐个加点
         for (int j = 0; j < g->v; j++) {
             if (i != j && matrix_get(&m, j, i) != INF) {
                 for (int k = 0; k < g->v; k++) {

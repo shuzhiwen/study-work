@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define n 5  //进程数量
-#define m 4  //资源类型数量
+#define n 5  // 进程数量
+#define m 4  // 资源类型数量
 
-int Available[m] = {1, 5, 2, 0};  //可用资源，m个资源类型
+int Available[m] = {1, 5, 2, 0};  // 可用资源，m个资源类型
 int Max[n][m] = {                 // n个进程提交的最大资源需求
     {0, 0, 1, 2},
     {1, 7, 5, 0},
@@ -41,28 +41,28 @@ bool isSafe() {
 
         if (Finish[i] == false) {
             for (int j = 0; j < m; j++) {
-                if (Need[i][j] > Work[j]) {  //不满足条件
+                if (Need[i][j] > Work[j]) {  // 不满足条件
                     isNeedExceedWork = true;
                     break;
                 }
             }
-            if (!isNeedExceedWork) {  //满足条件时
+            if (!isNeedExceedWork) {  // 满足条件时
                 for (int j = 0; j < m; j++) {
                     Work[j] += Allocation[i][j];
                 }
                 Finish[i] = true;
-                i = -1;  //寻找一下个满足条件的进程
+                i = -1;  // 寻找一下个满足条件的进程
             }
         }
     }
 
     for (int i = 0; i < n; i++) {
-        if (Finish[i] == false) {  //不安全
+        if (Finish[i] == false) {  // 不安全
             return false;
         }
     }
 
-    return true;  //安全
+    return true;  // 安全
 }
 
 void banker(int process, int* request) {
@@ -82,7 +82,7 @@ void banker(int process, int* request) {
         }
     }
 
-    for (int i = 0; i < m; i++) {  //虚拟分配，用以检测系统是否处于安全状态
+    for (int i = 0; i < m; i++) {  // 虚拟分配，用以检测系统是否处于安全状态
         Available[i] -= request[i];
         Allocation[process][i] += request[i];
         Need[process][i] -= request[i];
@@ -94,7 +94,7 @@ void banker(int process, int* request) {
     } else {
         printf("资源分配失败：系统处于不安全状态\n");
         printf("出错进程：P%d\n", process);
-        for (int i = 0; i < m; i++) {  //恢复原状态
+        for (int i = 0; i < m; i++) {  // 恢复原状态
             Available[i] += request[i];
             Allocation[process][i] -= request[i];
             Need[process][i] += request[i];

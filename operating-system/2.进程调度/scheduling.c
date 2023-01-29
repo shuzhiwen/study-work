@@ -2,30 +2,30 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define PNUM 5    //进程的数量
-#define TIMER 10  //定时器,最长CPU区间时间
-#define SLICE 2   //轮转算法的时间片
+#define PNUM 5    // 进程的数量
+#define TIMER 10  // 定时器,最长CPU区间时间
+#define SLICE 2   // 轮转算法的时间片
 
 typedef struct node {
-    int pid;            //进程号
-    int priority;       //进程优先级,1~3,数字越小优先级越高
-    int arrival;        //到达时间
+    int pid;            // 进程号
+    int priority;       // 进程优先级,1~3,数字越小优先级越高
+    int arrival;        // 到达时间
     int burst;          // CPU区间时间
-    int rest;           //剩余时间
-    char state;         //进程状态,'N'新建,'R'运行,'W'等待CPU(就绪),'T'终止
-    struct node *next;  //指向队列中下一个进程的PCB
+    int rest;           // 剩余时间
+    char state;         // 进程状态,'N'新建,'R'运行,'W'等待CPU(就绪),'T'终止
+    struct node *next;  // 指向队列中下一个进程的PCB
 } PCB;
 
-int timenow = 0;                //当前时刻,模拟时钟滴答
-int gantt[TIMER * PNUM] = {0};  //用一个数组记录调度过程,每个时刻调度的进程号
+int timenow = 0;                // 当前时刻,模拟时钟滴答
+int gantt[TIMER * PNUM] = {0};  // 用一个数组记录调度过程,每个时刻调度的进程号
 
-PCB *job;           //所有作业的序列,带头节点(为简化编程)
-PCB *ready = NULL;  //进程就绪队列,不带头节点
-PCB *tail = NULL;   //记录就绪队列的尾节点
-PCB *run = NULL;  //正在运行中的进程,不带头结点，任意时刻最多仅一个进程。
-PCB *finish = NULL;  //已经结束的程序,不带头结点，所有进程将按结束先后顺序移入该链表
+PCB *job;           // 所有作业的序列,带头节点(为简化编程)
+PCB *ready = NULL;  // 进程就绪队列,不带头节点
+PCB *tail = NULL;   // 记录就绪队列的尾节点
+PCB *run = NULL;  // 正在运行中的进程,不带头结点，任意时刻最多仅一个进程。
+PCB *finish = NULL;  // 已经结束的程序,不带头结点，所有进程将按结束先后顺序移入该链表
 
-void pushJob(PCB pcb[PNUM]) {  //链接进程并放入job链表
+void pushJob(PCB pcb[PNUM]) {  // 链接进程并放入job链表
     job = (PCB *)malloc(sizeof(PCB));
     job->next = pcb;
     for (int i = 0; i < PNUM - 1; i++) {
@@ -33,12 +33,12 @@ void pushJob(PCB pcb[PNUM]) {  //链接进程并放入job链表
     }
 }
 
-void pushReady(PCB *job) {  //遍历job，将到达的进程放入ready
+void pushReady(PCB *job) {  // 遍历job，将到达的进程放入ready
     PCB *tmp = job->next;
     PCB *prev = job;
 
     while (tmp != NULL) {
-        if (tmp->arrival == timenow) {  //进程到达
+        if (tmp->arrival == timenow) {  // 进程到达
             prev->next = tmp->next;
             if (ready == NULL) {
                 ready = tail = tmp;
@@ -55,7 +55,7 @@ void pushReady(PCB *job) {  //遍历job，将到达的进程放入ready
     }
 }
 
-void printInit(PCB pcb[PNUM]) {  //打印初始化信息
+void printInit(PCB pcb[PNUM]) {  // 打印初始化信息
     for (int i = 0; i < PNUM; i++) {
         printf("pid: %d   ", pcb[i].pid);
         printf("arrival: %d   ", pcb[i].arrival);
@@ -65,7 +65,7 @@ void printInit(PCB pcb[PNUM]) {  //打印初始化信息
     }
 }
 
-void printAnswer() {  //打印结果
+void printAnswer() {  // 打印结果
     printf("timenow: %d\n", timenow);
     printf("reverse order of results: \n");
     for (PCB *tmp = finish; tmp != NULL; tmp = tmp->next) {
@@ -95,7 +95,7 @@ void FCFS(PCB pcb[PNUM]) {
         if (run != NULL) {  // run中的进程没有执行完毕,继续执行
             run->rest--;
             gantt[timenow] = run->pid;
-            if (run->rest == 0) {  //执行完毕
+            if (run->rest == 0) {  // 执行完毕
                 run->state = 'T';
                 run->next = finish;
                 finish = run;
@@ -106,18 +106,18 @@ void FCFS(PCB pcb[PNUM]) {
     }
 }
 
-PCB *findShortest_prev() {  //找到ready队列中耗时最短进程的前一个进程
+PCB *findShortest_prev() {  // 找到ready队列中耗时最短进程的前一个进程
     PCB *tmp = ready;
     PCB *Shortest_prev = ready;
 
     while (tmp != NULL && tmp->next != NULL) {
         if (tmp->next->rest < Shortest_prev->next->rest &&
-            tmp->next->rest < Shortest_prev->rest) {  //特殊情况
+            tmp->next->rest < Shortest_prev->rest) {  // 特殊情况
             Shortest_prev = tmp;
         }
         tmp = tmp->next;
     }
-    return Shortest_prev;  //返回耗时最短进程的前一个进程,或者返回ready
+    return Shortest_prev;  // 返回耗时最短进程的前一个进程,或者返回ready
 }
 
 void SJF(PCB pcb[PNUM]) {
@@ -135,7 +135,7 @@ void SJF(PCB pcb[PNUM]) {
                     if (ready == NULL) {
                         tail = NULL;
                     }
-                } else {  //返回的不是ready
+                } else {  // 返回的不是ready
                     run = Shortest_prev->next;
                     if (run == tail) {
                         tail = Shortest_prev;
@@ -148,7 +148,7 @@ void SJF(PCB pcb[PNUM]) {
         if (run != NULL) {  // run中的进程没有执行完毕,继续执行
             run->rest--;
             gantt[timenow] = run->pid;
-            if (run->rest == 0) {  //执行完毕
+            if (run->rest == 0) {  // 执行完毕
                 run->state = 'T';
                 run->next = finish;
                 finish = run;
@@ -174,7 +174,7 @@ void SRTF(PCB pcb[PNUM]) {
                     if (ready == NULL) {
                         tail = NULL;
                     }
-                } else {  //返回的不是ready
+                } else {  // 返回的不是ready
                     run = Shortest_prev->next;
                     if (run == tail) {
                         tail = Shortest_prev;
@@ -187,7 +187,7 @@ void SRTF(PCB pcb[PNUM]) {
         if (run != NULL) {  // run中的进程没有执行完毕,继续执行
             run->rest--;
             gantt[timenow] = run->pid;
-            if (run->rest == 0) {  //执行完毕
+            if (run->rest == 0) {  // 执行完毕
                 run->state = 'T';
                 run->next = finish;
                 finish = run;
@@ -220,11 +220,11 @@ void RR(PCB pcb[PNUM]) {
                 tail = NULL;
             }
         }
-        if (run != NULL) {  //处理一个时间片
+        if (run != NULL) {  // 处理一个时间片
             for (int i = 0; i < SLICE; i++) {
                 run->rest--;
                 gantt[timenow++] = run->pid;
-                if (run->rest == 0) {  //执行完毕
+                if (run->rest == 0) {  // 执行完毕
                     run->state = 'T';
                     run->next = finish;
                     finish = run;
@@ -233,7 +233,7 @@ void RR(PCB pcb[PNUM]) {
                 }
                 pushReady(job);
             }
-            if (run != NULL) {  //还未执行完,放入ready尾部
+            if (run != NULL) {  // 还未执行完,放入ready尾部
                 if (ready == NULL) {
                     ready = tail = run;
                 } else {
@@ -250,18 +250,18 @@ void RR(PCB pcb[PNUM]) {
     }
 }
 
-PCB *findMaxPriority_prev() {  //找到ready队列中最高优先级进程的前一个进程
+PCB *findMaxPriority_prev() {  // 找到ready队列中最高优先级进程的前一个进程
     PCB *tmp = ready;
     PCB *Shortest_prev = ready;
 
     while (tmp != NULL && tmp->next != NULL) {
         if (tmp->next->priority < Shortest_prev->next->priority &&
-            tmp->next->priority < Shortest_prev->priority) {  //特殊情况
+            tmp->next->priority < Shortest_prev->priority) {  // 特殊情况
             Shortest_prev = tmp;
         }
         tmp = tmp->next;
     }
-    return Shortest_prev;  //返回最高优先级进程的前一个进程,或者返回ready
+    return Shortest_prev;  // 返回最高优先级进程的前一个进程,或者返回ready
 }
 
 void Priority(PCB pcb[PNUM]) {
@@ -269,7 +269,7 @@ void Priority(PCB pcb[PNUM]) {
     while (job->next != NULL || ready != NULL || run != NULL) {
         pushReady(job);
         if (run == NULL && ready != NULL) {  // run中无进程,ready队列中耗时最短的进程放入run中
-            PCB *Shortest_prev = findMaxPriority_prev();  //在SJF的基础上改变了寻找函数
+            PCB *Shortest_prev = findMaxPriority_prev();  // 在SJF的基础上改变了寻找函数
 
             if (Shortest_prev != NULL) {
                 if (Shortest_prev->next == NULL ||
@@ -279,7 +279,7 @@ void Priority(PCB pcb[PNUM]) {
                     if (ready == NULL) {
                         tail = NULL;
                     }
-                } else {  //返回的不是ready
+                } else {  // 返回的不是ready
                     run = Shortest_prev->next;
                     if (run == tail) {
                         tail = Shortest_prev;
@@ -292,7 +292,7 @@ void Priority(PCB pcb[PNUM]) {
         if (run != NULL) {  // run中的进程没有执行完毕,继续执行
             run->rest--;
             gantt[timenow] = run->pid;
-            if (run->rest == 0) {  //执行完毕
+            if (run->rest == 0) {  // 执行完毕
                 run->state = 'T';
                 run->next = finish;
                 finish = run;

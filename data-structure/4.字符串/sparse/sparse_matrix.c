@@ -16,7 +16,7 @@ void sparse_matrix_init(SparseMatrix *m, int rows, int cols) {
 // 将m的第row行第col列设置为value
 // 如果下标越界返回 `STATUS_ERR_INVALID_RANGE`
 enum Status sparse_matrix_set(SparseMatrix *m, int row, int col, double value) {
-    if (m->cols < col || m->rows < row || row < 0 || col < 0) {  //检查下标越界
+    if (m->cols < col || m->rows < row || row < 0 || col < 0) {  // 检查下标越界
         return STATUS_ERR_INVALID_RANGE;
     }
 
@@ -26,27 +26,27 @@ enum Status sparse_matrix_set(SparseMatrix *m, int row, int col, double value) {
     Newnode->data.row = row;
     Newnode->data.value = value;
 
-    if (m->head == NULL) {  //当矩阵没有元素
+    if (m->head == NULL) {  // 当矩阵没有元素
         m->head = m->tail = Newnode;
         m->tail = NULL;
     } else {
         struct ListNode *p = m->head, *q = NULL;  // q记录p的上一个节点
 
         while (p != NULL) {
-            if (p->data.row == row && p->data.col == col) {  //如果坐标相等则改变原有节点中的数值
+            if (p->data.row == row && p->data.col == col) {  // 如果坐标相等则改变原有节点中的数值
                 p->data.value = value;
                 free(Newnode);
                 break;
             } else if (p->data.row > row || (p->data.row == row && p->data.col > col)) {
-                if (q == NULL) {  //头部插入
+                if (q == NULL) {  // 头部插入
                     Newnode->next = p;
                     m->head = Newnode;
-                } else {  //中部插入
+                } else {  // 中部插入
                     Newnode->next = p;
                     q->next = Newnode;
                 }
                 break;
-            } else if (p->next == NULL) {  //尾部插入
+            } else if (p->next == NULL) {  // 尾部插入
                 p->next = Newnode;
                 Newnode->next = NULL;
                 m->tail = Newnode;
@@ -70,11 +70,11 @@ double sparse_matrix_get(SparseMatrix *m, int row, int col) {
 
     if (m->head == NULL) {
         return 0;
-    } else if (m->cols < col || m->rows < row) {  //下标越界检查
+    } else if (m->cols < col || m->rows < row) {  // 下标越界检查
         return NAN;
     }
 
-    while (p != NULL) {  //搜索对应的位置
+    while (p != NULL) {  // 搜索对应的位置
         if (p->data.row == row && p->data.col == col) {
             return p->data.value;
         }

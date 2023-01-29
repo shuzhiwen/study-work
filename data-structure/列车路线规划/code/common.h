@@ -8,18 +8,18 @@
 #define waiting_time 20
 
 struct station {
-    int ser_num;        //编号
-    char chi_name[20];  //中文名
-    char eng_name[20];  //英文名
+    int ser_num;        // 编号
+    char chi_name[20];  // 中文名
+    char eng_name[20];  // 英文名
 };
 
 struct route {
-    double fare;        //费用
-    char tra_num[20];   //列车号
-    char from[20];      //出发地
-    char to[20];        //目的地
-    char dep_time[20];  //发车时刻
-    char arr_time[20];  //到达时刻
+    double fare;        // 费用
+    char tra_num[20];   // 列车号
+    char from[20];      // 出发地
+    char to[20];        // 目的地
+    char dep_time[20];  // 发车时刻
+    char arr_time[20];  // 到达时刻
     int time_cost;
 };
 

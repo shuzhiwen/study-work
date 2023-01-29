@@ -1,6 +1,6 @@
 #include "trietree.h"
 
-//释放字典树以及依赖于字典树的内存空间
+// 释放字典树以及依赖于字典树的内存空间
 void trietree_free(struct trietree *root) {
     for (int i = 0; i < 26; i++) {
         if (root != NULL && root->next[i] != NULL) {
@@ -17,7 +17,7 @@ void trietree_free(struct trietree *root) {
     }
 }
 
-//根据站点拼音查找其是否在字典树中，如是则返回其地址，否则返回NULL
+// 根据站点拼音查找其是否在字典树中，如是则返回其地址，否则返回NULL
 struct trietree *trietree_find(struct trietree *root, char *s) {
     int len = strlen(s);
     struct trietree *p = root;
@@ -42,7 +42,7 @@ struct trietree *trietree_find(struct trietree *root, char *s) {
     return NULL;
 }
 
-//辅助函数，建立字典树中单个结点
+// 辅助函数，建立字典树中单个结点
 void trietree_build_node(struct trietree **root, char *s) {
     struct trietree *T = (struct trietree *)malloc(sizeof(struct trietree));
 
@@ -60,7 +60,7 @@ void trietree_build_node(struct trietree **root, char *s) {
     }
 }
 
-//根据数组vec构建字典树
+// 根据数组vec构建字典树
 struct trietree *trietree_build_stat(struct Vector *vec) {
     struct trietree *root = NULL;
     char eng[20];

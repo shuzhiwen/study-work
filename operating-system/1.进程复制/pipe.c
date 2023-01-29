@@ -20,36 +20,36 @@ int main() {
 
     if (p1 == 0) {  // p1子进程
         printf("I am child process p1, pid: %d\n", getpid());
-        if (write(fds1[1], massage1, sizeof(massage1)) == -1) {  //写
+        if (write(fds1[1], massage1, sizeof(massage1)) == -1) {  // 写
             perror("p1 write");
             exit(1);
         }
-        if (read(fds2[0], massage1, sizeof(massage1)) == -1) {  //读
+        if (read(fds2[0], massage1, sizeof(massage1)) == -1) {  // 读
             perror("p1 read");
             exit(1);
         } else {
-            printf("p1: %s\n", massage1);  //输出
+            printf("p1: %s\n", massage1);  // 输出
         }
-    } else if (p1 > 0) {  //父进程
+    } else if (p1 > 0) {  // 父进程
         pid_t p2 = fork();
 
         if (p2 == 0) {  // p2子进程
             printf("I am child process p2, pid: %d\n", getpid());
-            if (write(fds2[1], massage2, sizeof(massage2)) == -1) {  //写
+            if (write(fds2[1], massage2, sizeof(massage2)) == -1) {  // 写
                 perror("p2 write");
                 exit(1);
             }
-            if (read(fds1[0], massage2, sizeof(massage2)) == -1) {  //读
+            if (read(fds1[0], massage2, sizeof(massage2)) == -1) {  // 读
                 perror("p2 read");
                 exit(1);
             } else {
-                printf("p2: %s\n", massage2);  //输出
+                printf("p2: %s\n", massage2);  // 输出
             }
-        } else if (p2 > 0) {  //父进程
-        } else {              //出错
+        } else if (p2 > 0) {  // 父进程
+        } else {              // 出错
             printf(" error!\n");
         }
-    } else {  //出错
+    } else {  // 出错
         printf(" error!\n");
     }
 

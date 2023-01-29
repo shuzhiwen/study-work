@@ -1,6 +1,6 @@
 #include "init_help.h"
 
-//在字符串中搜索下一个逗号，若找到则返回其下标，否则返回-1
+// 在字符串中搜索下一个逗号，若找到则返回其下标，否则返回-1
 int find_next_comma(char *buffer, int n) {
     char *p = buffer + n;
 
@@ -15,7 +15,7 @@ int find_next_comma(char *buffer, int n) {
     }
 }
 
-//初始化站点信息，保存在数组vec中
+// 初始化站点信息，保存在数组vec中
 void station_init(struct Vector *vec) {
     int ser_num = 0;
     char buffer[100];
@@ -49,7 +49,7 @@ void station_init(struct Vector *vec) {
     fclose(fp);
 }
 
-//统一时间格式为“xx:xx”
+// 统一时间格式为“xx:xx”
 void time_correction(char *t) {
     int n = time_hash_to_int(t);
 
@@ -61,7 +61,7 @@ void time_correction(char *t) {
     t[5] = '\0';
 }
 
-//计算某趟列车的费用
+// 计算某趟列车的费用
 double computing_costs(int time_cost, char type) {
     if (type == 'G') {
         return time_cost * 1.57;
@@ -70,7 +70,7 @@ double computing_costs(int time_cost, char type) {
     }
 }
 
-//计算某趟列车的用时
+// 计算某趟列车的用时
 int time_cost(char *dep_time, char *arr_time) {
     int n1 = time_hash_to_int(dep_time);
     int n2 = time_hash_to_int(arr_time);
@@ -82,7 +82,7 @@ int time_cost(char *dep_time, char *arr_time) {
     }
 }
 
-//初始化列车线路（班次）信息，保存在字典树stat中
+// 初始化列车线路（班次）信息，保存在字典树stat中
 int route_init(struct trietree *stat, struct Vector *vec) {
     FILE *fp = fopen("route.csv", "r");
 
@@ -143,7 +143,7 @@ int route_init(struct trietree *stat, struct Vector *vec) {
     return failed;
 }
 
-//根据名称查找车站的编号
+// 根据名称查找车站的编号
 int station_ser_num(struct Vector *vec, char *s) {
     for (int i = 0; i < vec->size; i++) {
         if (strcmp(s, vector_at(vec, i)->chi_name) == 0 ||
@@ -155,7 +155,7 @@ int station_ser_num(struct Vector *vec, char *s) {
     return -1;
 }
 
-//将字符串对应的车站英文名称写入字符串
+// 将字符串对应的车站英文名称写入字符串
 bool station_trans_to_engname(struct Vector *vec, char *s) {
     for (int i = 0; i < vec->size; i++) {
         if (strcmp(s, vector_at(vec, i)->chi_name) == 0 ||
@@ -169,7 +169,7 @@ bool station_trans_to_engname(struct Vector *vec, char *s) {
     return false;
 }
 
-//将字符串表示的时间映射成整型
+// 将字符串表示的时间映射成整型
 int time_hash_to_int(char *s) {
     int n1 = 0, n2 = 0;
     char *p = s;
@@ -191,7 +191,7 @@ int time_hash_to_int(char *s) {
     return n1 + n2;
 }
 
-//判断时间衔接是否合法
+// 判断时间衔接是否合法
 bool Is_correct_time_link(int time_limit, char *t) {
     int n = time_hash_to_int(t);
 
@@ -202,7 +202,7 @@ bool Is_correct_time_link(int time_limit, char *t) {
     }
 }
 
-//判断时间输入的格式是否合法
+// 判断时间输入的格式是否合法
 bool Is_time(char *s) {
     char *p1 = s, *p2 = NULL;
 

@@ -99,7 +99,7 @@ struct BTree *huffman_build_using_heap(char *s) {
 
 int Isleaf(struct BTree *root) { return root != NULL && root->left == NULL && root->right == NULL; }
 
-//往左为0，往右为1
+// 往左为0，往右为1
 int coding_count(struct BTree *root, int a[], char s, int index) {
     int flag = 0;
 
@@ -127,7 +127,7 @@ int coding_count(struct BTree *root, int a[], char s, int index) {
     return flag;
 }
 
-//哈弗曼树编码查询并返回长度
+// 哈弗曼树编码查询并返回长度
 int coding_refer(struct BTree *root, char s) {
     int a[256], i;
 

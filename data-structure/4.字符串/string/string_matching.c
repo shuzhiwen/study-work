@@ -69,7 +69,7 @@ int KMP_matching(char *s, char *pat) {
     return j == pat_len ? (i - pat_len) : -1;
 }
 
-//以下为辅助函数
+// 以下为辅助函数
 void computer_bad_character(char *pat, int *bad_character) {
     char *p = pat + strlen(pat) - 1;
 
@@ -107,7 +107,7 @@ int BM_matching(char *s, char *pat) {
             int n1, n2;
 
             n1 = j - bad_character[s[i]];
-            n2 = 1;  //目前无法完全理解好后缀
+            n2 = 1;  // 目前无法完全理解好后缀
 
             i += n1 > n2 ? n1 : n2;
             j = pat_len - 1;

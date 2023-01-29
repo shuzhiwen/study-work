@@ -3,8 +3,8 @@
 #include "common.h"
 
 struct File {
-    int count;      //被引用数量
-    char name[20];  //文件名
+    int count;      // 被引用数量
+    char name[20];  // 文件名
 };
 
 typedef struct File Vec_DataType;
