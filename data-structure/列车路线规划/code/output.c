@@ -48,6 +48,8 @@ int find_next_station(struct Vector *vec, int *total, bool *visited) {
 void update_time_limit(struct Vector *vec, int *time_limit, struct trietree **path, int next_num) {
     struct ListNode *p = NULL;
 
+    if (path[next_num] == NULL) return;
+
     for (p = path[next_num]->l.head; p != NULL; p = p->next) {
         if (strcmp(vector_at(vec, next_num)->eng_name, p->data.to) == 0) {
             *time_limit = time_hash_to_int(p->data.arr_time);
